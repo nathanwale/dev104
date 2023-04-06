@@ -9,7 +9,7 @@ import Foundation
 
 //
 // Protocol for an API Request
-//  - path: path to endpoint, excludes domain and query string
+//  - subPath: path to endpoint, excludes domain, path prefix, and query string
 //  - queryItems: optional list of query items
 //  - request: request as URLRequest
 //  - postData: optional data to post in a POST request
@@ -20,7 +20,7 @@ protocol ApiRequest
     associatedtype Response
     
     // path to endpoint, excludes domain and query string
-    var path: String { get }
+    var subPath: String { get }
     
     // optional list of query items
     var queryItems: [URLQueryItem]? { get }
@@ -46,15 +46,15 @@ enum ApiRequestError: Error
     case requestFailed
     case badResponse(statusCode: Int)
 }
-
+// https://www.themealdb.com/api/json/v1/1/
 
 //
 // Configure ApiRequest for this service
 //
 extension ApiRequest
 {
-    var host: String { "localhost" }
-    var port: Int { 8080 }
+    var host: String { "www.themealdb.com" }
+    var pathPrefix: String { "/api/json/v1/1" }
 }
 
 
@@ -78,10 +78,9 @@ extension ApiRequest
         // build URL components
         var components = URLComponents()
         
-        components.scheme = "http"
+        components.scheme = "https"
         components.host = host
-        components.port = port
-        components.path = path
+        components.path = "\(pathPrefix)/\(subPath)"
         components.queryItems = queryItems
         
         // assign url components to request
@@ -156,3 +155,7 @@ extension ApiRequest where Response: Decodable
         return decoded
     }
 }
+
+
+
+
