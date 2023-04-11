@@ -51,7 +51,7 @@ final class RecipeDetailApiTests: XCTestCase
         let nonExistendIdentifier = "-1"
         let request = RecipeDetailRequest(recipeIdentifier: nonExistendIdentifier)
         do {
-            let recipe = try await request.fetchRecipeDetail()
+            let _ = try await request.fetchRecipeDetail()
             XCTFail("This recipe shouldn't exist, and fetch should throw an ApiRequest.notFound error")
         } catch {
             XCTAssertEqual(error as? ApiRequestError, .notFound)
