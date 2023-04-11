@@ -11,7 +11,17 @@ import Foundation
 
 struct IngredientListRequest: ApiRequest
 {
-    typealias Response = [Ingredient]
+    typealias Response = [String: [IngredientCodable]]
+    
+    struct IngredientCodable: Codable
+    {
+        let ingredient: Ingredient
+        
+        enum CodingKeys: String, CodingKey
+        {
+            case ingredient = "strIngredient"
+        }
+    }
     
     var subPath: String {
         "list.php"
@@ -19,5 +29,10 @@ struct IngredientListRequest: ApiRequest
     
     var queryItems: [URLQueryItem]? {
         [URLQueryItem(name: "i", value: "list")]
+    }
+    
+    func fetchIngredients() async throws -> [Ingredient]
+    {
+        try await send()["meals"]!.map { $0.ingredient }
     }
 }
