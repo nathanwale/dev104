@@ -40,7 +40,7 @@ protocol ApiRequest
 //  - badResponse: HTTP response code was not 200 OK.
 //        statusCode is the response code returned
 //
-enum ApiRequestError: Error
+enum ApiRequestError: Error, Equatable
 {
     case notFound
     case requestFailed
