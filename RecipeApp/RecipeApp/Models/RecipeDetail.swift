@@ -95,7 +95,7 @@ extension RecipeDetail: Decodable
         videoUrl = try values.decode(URL.self, forKey: .videoUrl)
         
         // decode tags and split into list of tags
-        let tagString = try values.decode(String.self, forKey: .tagString)
+        let tagString = try values.decode(String?.self, forKey: .tagString) ?? ""
         tags = tagString.split(separator: ",").map { String($0) }
         
         // decode ingredients and measurements into list of RecipeIngredient
