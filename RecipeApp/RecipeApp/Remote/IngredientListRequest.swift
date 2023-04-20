@@ -11,9 +11,9 @@ import Foundation
 
 struct IngredientListRequest: ApiRequest
 {
-    typealias Response = [String: [IngredientCodable]]
+    typealias Response = [String: [IngredientDecoder]]
     
-    struct IngredientCodable: Codable
+    struct IngredientDecoder: Codable
     {
         let ingredient: Ingredient
         
