@@ -80,10 +80,12 @@ extension ApiRequest
         
         components.scheme = "https"
         components.host = host
+        
         components.path = "\(pathPrefix)/\(subPath)"
         components.queryItems = queryItems
         
         // assign url components to request
+        print("Fetching \(components.url?.absoluteString ?? "<URL is nil!>")")
         var request = URLRequest(url: components.url!)
         
         // if we have POST data, add it to the request
