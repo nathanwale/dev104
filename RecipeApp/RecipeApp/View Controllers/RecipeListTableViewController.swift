@@ -12,58 +12,28 @@ class RecipeListTableViewController: UITableViewController
     // reuse id for table cells
     let reuseIdentifier = "Recipe"
     
-    
-    // MARK: - view model
-    // data source type
-    typealias DataSource = UITableViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
-    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>
-    
-    enum ViewModel
-    {
-        enum Section { case main }
-        typealias Item = RecipeListItem
-    }
-    
-    struct Model
-    {
-        var favouriteItems = [RecipeListItem]()
-        var searchedItems = [RecipeListItem]()
-    }
-    
     // MARK: - properties
     // data source
     var dataSource: DataSource!
     
     // model
-    var model = Model()
-    
-    // snapshot
-    var itemsSnapshot: DataSourceSnapshot {
-        var snapshot = DataSourceSnapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(model.searchedItems)
-        return snapshot
-    }
-    
-    // fetch tasks
-    var fetchTask: Task<Void, Never>? = nil
-    
+    private var model = Model()
+
     
     // MARK: - lifecycle
-    // cancel tasks on exit
-    deinit {
-        fetchTask?.cancel()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dataSource = createDataSource()
         tableView.dataSource = dataSource
         
-        fetchSearchedItems()
+        loadItems()
     }
 
+    
+    // override to load items in subclass
+    func loadItems() {}
+    
     
     // MARK: - data source
     //
@@ -96,29 +66,44 @@ class RecipeListTableViewController: UITableViewController
     //
     func updateDataSource()
     {
-        dataSource.apply(itemsSnapshot, animatingDifferences: true)
+        dataSource.apply(model.snapshot, animatingDifferences: true)
     }
     
     
-    // MARK: - search
-    func fetchSearchedItems()
+    //
+    // replace items
+    //
+    func replaceItems(items: [RecipeListItem])
     {
-        let request = RecipeSearchRequest(searchTerm: "chicken")
-        // cancel task if exists
-        fetchTask?.cancel()
-        
-        fetchTask = Task {
-            do {
-                let items = try await request.fetchSearchResults()
-                model.searchedItems = items
-            } catch {
-                model.searchedItems = []
-                print(error)
-            }
-            // update datasource
-            updateDataSource()
-            // finish task
-            fetchTask = nil
-        }
+        model.snapshot.deleteAllItems()
+        model.snapshot.appendSections([.main])
+        model.snapshot.appendItems(items)
+        dataSource.apply(model.snapshot)
+    }
+    
+}
+
+
+// MARK: - view model
+extension RecipeListTableViewController
+{
+    // data source type
+    typealias DataSource = UITableViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
+    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>
+
+    // view model
+    enum ViewModel
+    {
+        enum Section { case main }
+        typealias Item = RecipeListItem
+    }
+    
+    // model model
+    struct Model
+    {
+        // items
+        var items = [RecipeListItem]()
+        // snapshot
+        var snapshot = DataSourceSnapshot()
     }
 }
