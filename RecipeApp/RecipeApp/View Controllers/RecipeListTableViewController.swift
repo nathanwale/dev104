@@ -58,7 +58,7 @@ class RecipeListTableViewController: UITableViewController
                 for: indexPath) as! RecipeListCell
             
             // configure cell
-            cell.update(with: item)
+            cell.update(with: item, saved: true)
             
             // return cell
             return cell

@@ -35,8 +35,9 @@ class RecipeListCell: UITableViewCell
     }
     
     // MARK: - update
-    func update(with recipeListItem: RecipeListItem)
+    func update(with recipeListItem: RecipeListItem, saved: Bool)
     {
+        self.saved = saved
         nameLabel.text = recipeListItem.name
         fetchImage(for: recipeListItem.imageUrl)
         recipeImageView.layer.cornerRadius = 10
