@@ -18,45 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Recipe" id="8sn-vx-4LL" customClass="RecipeListTableViewCell" customModule="RecipeApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="122.33333587646484"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Recipe" id="8sn-vx-4LL" customClass="RecipeListCell" customModule="RecipeApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8sn-vx-4LL" id="qUr-WE-7GJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="122.33333587646484"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wvn-GJ-bVz">
-                                            <rect key="frame" x="20" y="11" width="334.66666666666669" height="100.33333333333333"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JC9-Di-Eee">
-                                                    <rect key="frame" x="0.0" y="-1.3333333333333357" width="100" height="103.66666666666666"/>
-                                                    <color key="tintColor" systemColor="tertiaryLabelColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="45c-rS-SZ5"/>
-                                                        <constraint firstAttribute="height" constant="100" id="vbe-8A-URN"/>
-                                                    </constraints>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="1000" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzi-bd-Fhz">
-                                                    <rect key="frame" x="107.99999999999999" y="0.0" width="226.66666666666663" height="100.33333333333333"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="wvn-GJ-bVz" firstAttribute="leading" secondItem="qUr-WE-7GJ" secondAttribute="leadingMargin" id="9OA-Nz-sZF"/>
-                                        <constraint firstItem="wvn-GJ-bVz" firstAttribute="top" secondItem="qUr-WE-7GJ" secondAttribute="topMargin" id="Gj5-A9-7gT"/>
-                                        <constraint firstItem="wvn-GJ-bVz" firstAttribute="centerY" secondItem="qUr-WE-7GJ" secondAttribute="centerY" id="T4W-ud-db9"/>
-                                        <constraint firstItem="wvn-GJ-bVz" firstAttribute="trailing" secondItem="qUr-WE-7GJ" secondAttribute="trailingMargin" id="gOq-Od-5un"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="nameLabel" destination="Mzi-bd-Fhz" id="m17-n8-VrV"/>
-                                    <outlet property="recipeImageView" destination="JC9-Di-Eee" id="NhP-Q8-wST"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -173,45 +141,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Recipe" id="B7Y-WY-zQm" customClass="RecipeListTableViewCell" customModule="RecipeApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="122.33333587646484"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Recipe" id="B7Y-WY-zQm">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="B7Y-WY-zQm" id="Kk9-p7-RYE">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="122.33333587646484"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cwG-p5-t3z">
-                                            <rect key="frame" x="20" y="11" width="334.66666666666669" height="100.33333333333333"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Guz-Gm-qvx">
-                                                    <rect key="frame" x="0.0" y="-1.3333333333333357" width="100" height="103.66666666666666"/>
-                                                    <color key="tintColor" systemColor="tertiaryLabelColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="100" id="K98-7k-5CC"/>
-                                                        <constraint firstAttribute="width" constant="100" id="LJ9-YY-k44"/>
-                                                    </constraints>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="1000" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYS-sD-uKs">
-                                                    <rect key="frame" x="107.99999999999999" y="0.0" width="226.66666666666663" height="100.33333333333333"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="cwG-p5-t3z" firstAttribute="centerY" secondItem="Kk9-p7-RYE" secondAttribute="centerY" id="5o3-xX-Pd3"/>
-                                        <constraint firstItem="cwG-p5-t3z" firstAttribute="trailing" secondItem="Kk9-p7-RYE" secondAttribute="trailingMargin" id="6ox-L3-qo9"/>
-                                        <constraint firstItem="cwG-p5-t3z" firstAttribute="top" secondItem="Kk9-p7-RYE" secondAttribute="topMargin" id="Fhh-vR-jw5"/>
-                                        <constraint firstItem="cwG-p5-t3z" firstAttribute="leading" secondItem="Kk9-p7-RYE" secondAttribute="leadingMargin" id="N9o-Wq-G0j"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="nameLabel" destination="fYS-sD-uKs" id="nPo-12-p0W"/>
-                                    <outlet property="recipeImageView" destination="Guz-Gm-qvx" id="gX2-46-gZl"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -224,7 +160,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yef-ON-OX1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4324" y="-698"/>
+            <point key="canvasLocation" x="4329" y="-699"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="QDg-Gv-cRm">
@@ -286,12 +222,8 @@
     </scenes>
     <resources>
         <image name="fork.knife.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

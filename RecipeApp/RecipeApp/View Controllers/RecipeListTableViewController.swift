@@ -11,6 +11,7 @@ class RecipeListTableViewController: UITableViewController
 {
     // reuse id for table cells
     let reuseIdentifier = "Recipe"
+    let cellNibName = "RecipeTableCell"
     
     // MARK: - properties
     // data source
@@ -24,9 +25,15 @@ class RecipeListTableViewController: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // load custom NIB and register with table
+        let nib = UINib.init(nibName: cellNibName, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: reuseIdentifier)
+        
+        // setup and attach datasource
         dataSource = createDataSource()
         tableView.dataSource = dataSource
         
+        // load items. this method is for specialisation in subclasses
         loadItems()
     }
 
@@ -48,7 +55,7 @@ class RecipeListTableViewController: UITableViewController
             // get cell
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: self.reuseIdentifier,
-                for: indexPath) as! RecipeListTableViewCell
+                for: indexPath) as! RecipeListCell
             
             // configure cell
             cell.update(with: item)
