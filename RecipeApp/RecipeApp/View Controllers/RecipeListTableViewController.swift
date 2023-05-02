@@ -57,8 +57,11 @@ class RecipeListTableViewController: UITableViewController
                 withIdentifier: self.reuseIdentifier,
                 for: indexPath) as! RecipeListCell
             
+            // has this item been saved?
+            let saved = self.model.isSaved(item: item)
+            
             // configure cell
-            cell.update(with: item, saved: true)
+            cell.update(with: item, saved: saved)
             
             // return cell
             return cell
@@ -112,5 +115,11 @@ extension RecipeListTableViewController
         var items = [RecipeListItem]()
         // snapshot
         var snapshot = DataSourceSnapshot()
+        
+        // has the item been saved?
+        func isSaved(item: ViewModel.Item) -> Bool
+        {
+            UserStore.savedRecipes.contains(item)
+        }
     }
 }
