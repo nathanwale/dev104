@@ -13,11 +13,12 @@ class RecipeListCell: UITableViewCell
     // MARK: - outlets
     @IBOutlet var recipeImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var saveButton: UIButton!
     
     
     // MARK: - properties
     var fetchImageTask: Task<Void, Never>? = nil
-    
+    var saved = false
     
     // MARK: - lifecycle
     // cancel fetch image task on deinit
@@ -40,6 +41,18 @@ class RecipeListCell: UITableViewCell
         fetchImage(for: recipeListItem.imageUrl)
         recipeImageView.layer.cornerRadius = 10
     }
+    
+    
+    // MARK: - actions
+    @IBAction func savePressed() {
+        saved.toggle()
+        if saved {
+            saveButton.setTitle("Unsave", for: .normal)
+        } else {
+            saveButton.setTitle("Save", for: .normal)
+        }
+    }
+    
     
     // MARK: - remote requests
     //
