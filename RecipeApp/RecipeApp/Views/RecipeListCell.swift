@@ -38,20 +38,27 @@ class RecipeListCell: UITableViewCell
     func update(with recipeListItem: RecipeListItem, saved: Bool)
     {
         self.saved = saved
+        updateSaveButton()
         nameLabel.text = recipeListItem.name
         fetchImage(for: recipeListItem.imageUrl)
         recipeImageView.layer.cornerRadius = 10
     }
     
-    
-    // MARK: - actions
-    @IBAction func savePressed() {
-        saved.toggle()
+    func updateSaveButton()
+    {
         if saved {
             saveButton.setTitle("Unsave", for: .normal)
         } else {
             saveButton.setTitle("Save", for: .normal)
         }
+    }
+    
+    
+    // MARK: - actions
+    @IBAction func savePressed()
+    {
+        saved.toggle()
+        updateSaveButton()
     }
     
     
