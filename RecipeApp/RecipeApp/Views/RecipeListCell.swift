@@ -7,7 +7,6 @@
 
 import UIKit
 
-@IBDesignable
 class RecipeListCell: UITableViewCell
 {
     // MARK: - outlets
@@ -24,14 +23,6 @@ class RecipeListCell: UITableViewCell
     // cancel fetch image task on deinit
     deinit {
         fetchImageTask?.cancel()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    override class func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
     }
     
     // MARK: - update

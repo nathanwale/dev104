@@ -26,7 +26,9 @@ class RecipeListTableViewController: UITableViewController
         super.viewDidLoad()
         
         // load custom NIB and register with table
-        let nib = UINib.init(nibName: cellNibName, bundle: nil)
+        let bundle = Bundle(for: Self.self)
+        let nib = UINib(nibName: cellNibName, bundle: bundle)
+        
         tableView.register(nib, forCellReuseIdentifier: reuseIdentifier)
         
         // setup and attach datasource
