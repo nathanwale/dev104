@@ -30,4 +30,6 @@ struct UserStore
         }
         UserStore.displayNeedsUpdating = true
     }
+    
+    static var displayNeedsUpdating = false
 }
