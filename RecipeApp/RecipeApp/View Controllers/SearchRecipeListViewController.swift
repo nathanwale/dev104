@@ -50,7 +50,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     // MARK: - update
     //
-    // update an item that's had it's save state changed
+    // update an item that's had its save state changed
     //
     func updateSaveState(recipe: RecipeListItem, saved: Bool)
     {
