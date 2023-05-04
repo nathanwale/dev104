@@ -16,13 +16,15 @@ class RecipeListTableViewController: UITableViewController
     // MARK: - properties
     // data source
     var dataSource: DataSource!
+    var saveDelegate: SaveRecipeDelegate!
     
     // model
     private var model = Model()
 
     
     // MARK: - lifecycle
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         // load custom NIB and register with table
@@ -63,7 +65,10 @@ class RecipeListTableViewController: UITableViewController
             let saved = self.model.isSaved(item: item)
             
             // configure cell
-            cell.update(with: item, saved: saved)
+            cell.update(
+                with: item,
+                saved: saved,
+                saveDelegate: self.saveDelegate)
             
             // return cell
             return cell
@@ -93,6 +98,25 @@ class RecipeListTableViewController: UITableViewController
         dataSource.apply(model.snapshot)
     }
     
+    
+    //
+    // add item
+    //
+    func addItem(_ item: ViewModel.Item)
+    {
+        model.snapshot.appendItems([item])
+        dataSource.apply(model.snapshot)
+    }
+    
+    
+    //
+    // remove item
+    //
+    func removeItem(_ item: ViewModel.Item)
+    {
+        model.snapshot.deleteItems([item])
+        dataSource.apply(model.snapshot)
+    }
 }
 
 
