@@ -22,6 +22,7 @@ struct RecipeListItem
     let name: String
     let imageUrl: URL
     let identifier: RecipeIdentifier
+    var newlySaved = false
 }
 
 
