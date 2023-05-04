@@ -119,6 +119,19 @@ class RecipeListTableViewController: UITableViewController
     }
     
     //
+    // update item
+    //
+    func updateItems(_ items: [ViewModel.Item])
+    {
+        guard var snapshot = dataSource?.snapshot() else {
+            return
+        }
+        
+        snapshot.appendItems(items)
+        dataSource?.apply(snapshot)
+    }
+    
+    //
     // get cell for recipe
     //
     func cellFor(recipe: RecipeListItem) -> RecipeListCell?
@@ -127,9 +140,11 @@ class RecipeListTableViewController: UITableViewController
             let indexPath = dataSource?.indexPath(for: recipe),
             let cell = tableView.cellForRow(at: indexPath) as? RecipeListCell
         else {
+            // index path or cell couldn't be found
             return nil
         }
         
+        // return found cell
         return cell
     }
 }
