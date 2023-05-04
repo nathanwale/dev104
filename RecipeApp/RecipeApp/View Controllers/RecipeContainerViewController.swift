@@ -9,8 +9,19 @@ import UIKit
 
 class RecipeContainerViewController: UIViewController
 {
+    // outlets
+    // segment control
     @IBOutlet var segmentedControl: UISegmentedControl!
+    
+    // container view that contains the embedded tab bar controller
     @IBOutlet var containerView: UIView!
+    
+    // embedded tab bar controller
+    var embeddedTabBarController: UITabBarController!
+    
+    // attached view controllers
+    var savedRecipesViewController: FavouriteRecipesViewController!
+    var searchedRecipesViewController: SearchRecipeListViewController!
     
     enum Segment: String {
         case favourites = "Favourites"
@@ -43,6 +54,24 @@ class RecipeContainerViewController: UIViewController
     {
         super.viewDidLoad()
         
+        // assign embedded tabbar controller
+        embeddedTabBarController = (children.first as! UITabBarController)
+        
+        // assign child VCs to properties
+        for vc in embeddedTabBarController.viewControllers! {
+            // faves controller
+            if let vc = vc as? FavouriteRecipesViewController {
+                savedRecipesViewController = vc
+                savedRecipesViewController.saveDelegate = self
+            }
+            
+            // search controller
+            if let vc = vc as? SearchRecipeListViewController {
+                searchedRecipesViewController = vc
+                searchedRecipesViewController.saveDelegate = self
+            }
+        }
+        
         for (i, segment) in Segment.order.enumerated() {
             segmentedControl.setTitle(segment.rawValue, forSegmentAt: i)
         }
@@ -50,14 +79,47 @@ class RecipeContainerViewController: UIViewController
 
     @IBAction func switchEmbeddedView(_ sender: UISegmentedControl)
     {
+        // get selected segment and select it
         let i = sender.selectedSegmentIndex
-        guard let tabBarContoller = children.first as? UITabBarController else {
-            fatalError("No embedded tab bar controller")
-        }
-        tabBarContoller.selectedIndex = i
+        embeddedTabBarController.selectedIndex = i
     }
     
     
     
 }
 
+
+// MARK: - SaveRecipeDelegate conformance
+extension RecipeContainerViewController: SaveRecipeDelegate
+{
+    //
+    // save recipe to UserStore
+    //
+    func save(recipe: RecipeListItem)
+    {
+        // tell user store
+        UserStore.save(recipe: recipe)
+        
+        // tell saved recipes VC
+        savedRecipesViewController.recipeWasSaved(recipe)
+        
+        // tell searched recipes VC
+        searchedRecipesViewController.updateSaveSate(recipe: recipe, saved: true)
+    }
+    
+    //
+    // remove recipe from UserStore
+    //
+    func unsave(recipe: RecipeListItem)
+    {
+        // tell user store
+        UserStore.unsave(recipe: recipe)
+        
+        // tell saved recipes VC
+        savedRecipesViewController.recipeWasUnsaved(recipe)
+        
+        // tell searched recipes VC
+        searchedRecipesViewController.updateSaveSate(recipe: recipe, saved: false)
+    }
+    
+}
