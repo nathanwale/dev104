@@ -22,6 +22,10 @@ class SearchRecipeListViewController: RecipeListTableViewController
         fetchSearchedItems(searchTerm: "chicken")
     }
 
+    // MARK: - search
+    //
+    // search recipes for `searchTerm`
+    //
     func fetchSearchedItems(searchTerm: String)
     {
         let request = RecipeSearchRequest(searchTerm: searchTerm)
@@ -40,6 +44,20 @@ class SearchRecipeListViewController: RecipeListTableViewController
             updateDataSource()
             // finish task
             searchTask = nil
+        }
+    }
+    
+    
+    // MARK: - update
+    //
+    // update an item that's had it's save state changed
+    //
+    func updateSaveSate(recipe: RecipeListItem, saved: Bool)
+    {
+        if let indexPath = dataSource.indexPath(for: recipe) {
+            let cell = tableView.cellForRow(at: indexPath) as! RecipeListCell
+            cell.saved = saved
+            cell.updateSaveButton()
         }
     }
 }
