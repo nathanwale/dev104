@@ -53,8 +53,11 @@ class RecipeListTableViewController: UITableViewController
     func createDataSource() -> DataSource
     {
         let dataSource = DataSource(tableView: tableView) {
-            (tableView, indexPath, item) -> UITableViewCell?
+            (tableView, indexPath, itemId) -> UITableViewCell?
             in
+            
+            // get item from store
+            let item = self.model.itemStore[itemId]!
             
             // get cell
             let cell = tableView.dequeueReusableCell(
@@ -62,7 +65,7 @@ class RecipeListTableViewController: UITableViewController
                 for: indexPath) as! RecipeListCell
             
             // has this item been saved?
-            let saved = self.model.isSaved(item: item)
+            let saved = self.model.isSaved(itemId: itemId)
             
             // configure cell
             cell.update(
@@ -92,9 +95,18 @@ class RecipeListTableViewController: UITableViewController
     //
     func replaceItems(items: [RecipeListItem])
     {
+        let itemIds = items.map { $0.identifier }
+        
+        // update model items
+        model.itemStore.removeAll()
+        for item in items {
+            model.itemStore[item.identifier] = item
+        }
+        
+        // update table datasource
         model.snapshot.deleteAllItems()
         model.snapshot.appendSections([.main])
-        model.snapshot.appendItems(items)
+        model.snapshot.appendItems(itemIds)
         dataSource?.apply(model.snapshot)
     }
     
@@ -102,9 +114,10 @@ class RecipeListTableViewController: UITableViewController
     //
     // add item
     //
-    func addItem(_ item: ViewModel.Item)
+    func addItem(_ item: RecipeListItem)
     {
-        model.snapshot.appendItems([item])
+        model.itemStore[item.identifier] = item
+        model.snapshot.appendItems([item.identifier])
         dataSource?.apply(model.snapshot)
     }
     
@@ -112,23 +125,27 @@ class RecipeListTableViewController: UITableViewController
     //
     // remove item
     //
-    func removeItem(_ item: ViewModel.Item)
+    func removeItem(_ item: RecipeListItem)
     {
-        model.snapshot.deleteItems([item])
+        // remove from table datasource
+        model.snapshot.deleteItems([item.identifier])
         dataSource?.apply(model.snapshot)
+        
+        // remove from model store
+        model.itemStore.removeValue(forKey: item.identifier)
     }
     
     //
     // update item
     //
-    func updateItems(_ items: [ViewModel.Item])
+    func updateItems(_ items: [RecipeListItem])
     {
-        guard var snapshot = dataSource?.snapshot() else {
-            return
+        for item in items {
+            model.itemStore[item.identifier] = item
         }
-        
-        snapshot.appendItems(items)
-        dataSource?.apply(snapshot)
+        let itemIds = items.map { $0.identifier }
+        model.snapshot.reloadItems(itemIds)
+        dataSource?.apply(model.snapshot)
     }
     
     //
@@ -137,7 +154,7 @@ class RecipeListTableViewController: UITableViewController
     func cellFor(recipe: RecipeListItem) -> RecipeListCell?
     {
         guard
-            let indexPath = dataSource?.indexPath(for: recipe),
+            let indexPath = dataSource?.indexPath(for: recipe.identifier),
             let cell = tableView.cellForRow(at: indexPath) as? RecipeListCell
         else {
             // index path or cell couldn't be found
@@ -154,28 +171,29 @@ class RecipeListTableViewController: UITableViewController
 extension RecipeListTableViewController
 {
     // data source type
-    typealias DataSource = UITableViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
-    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>
+    typealias DataSource = UITableViewDiffableDataSource<ViewModel.Section, ViewModel.ItemId>
+    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.ItemId>
 
     // view model
     enum ViewModel
     {
         enum Section { case main }
-        typealias Item = RecipeListItem
+        typealias ItemId = RecipeIdentifier
     }
     
     // model model
     struct Model
     {
         // items
-        var items = [RecipeListItem]()
+        var itemStore = [RecipeIdentifier: RecipeListItem]()
         // snapshot
         var snapshot = DataSourceSnapshot()
         
         // has the item been saved?
-        func isSaved(item: ViewModel.Item) -> Bool
+        func isSaved(itemId: ViewModel.ItemId) -> Bool
         {
-            UserStore.savedRecipes.contains(item)
+            let item = itemStore[itemId]!
+            return UserStore.savedRecipes.contains(item)
         }
     }
 }
