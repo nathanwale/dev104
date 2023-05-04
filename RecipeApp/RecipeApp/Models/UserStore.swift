@@ -11,10 +11,25 @@ fileprivate let demoUrl = URL(string: "https://external-content.duckduckgo.com/i
 
 struct UserStore
 {
-    static let savedRecipes = [
+    static var savedRecipes = [
         RecipeListItem(name: "Nutrient Paste", imageUrl: demoUrl, identifier: "1"),
         RecipeListItem(name: "Oyako Don", imageUrl: demoUrl, identifier: "2"),
         RecipeListItem(name: "Lanzhou Lamian", imageUrl: demoUrl, identifier: "3"),
         RecipeListItem(name: "Tortellini", imageUrl: demoUrl, identifier: "4"),
     ]
+    
+    static func save(recipe: RecipeListItem)
+    {
+        UserStore.savedRecipes.append(recipe)
+        UserStore.displayNeedsUpdating = true
+    }
+    
+    static func unsave(recipe: RecipeListItem) {
+        UserStore.savedRecipes.removeAll {
+            $0 == recipe
+        }
+        UserStore.displayNeedsUpdating = true
+    }
+    
+    static var displayNeedsUpdating = false
 }
