@@ -21,15 +21,11 @@ struct UserStore
     static func save(recipe: RecipeListItem)
     {
         UserStore.savedRecipes.append(recipe)
-        UserStore.displayNeedsUpdating = true
     }
     
     static func unsave(recipe: RecipeListItem) {
         UserStore.savedRecipes.removeAll {
             $0 == recipe
         }
-        UserStore.displayNeedsUpdating = true
     }
-    
-    static var displayNeedsUpdating = false
 }
