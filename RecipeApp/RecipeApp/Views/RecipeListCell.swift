@@ -46,6 +46,9 @@ class RecipeListCell: UITableViewCell
         // update save button state
         updateSaveButton()
         
+        // update newly added state
+        updateNewlyAdded()
+        
         // update labels and image
         nameLabel.text = recipeListItem.name
         fetchImage(for: recipeListItem.imageUrl)
@@ -76,6 +79,19 @@ class RecipeListCell: UITableViewCell
             saveDelegate.save(recipe: recipe)
         } else {
             saveDelegate.unsave(recipe: recipe)
+        }
+    }
+    
+    
+    //
+    // update newly added state
+    //
+    func updateNewlyAdded()
+    {
+        if recipe.newlyAdded {
+            backgroundColor = .green
+        } else {
+            backgroundColor = .systemBackground
         }
     }
     
