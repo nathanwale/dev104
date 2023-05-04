@@ -15,7 +15,7 @@ class RecipeListTableViewController: UITableViewController
     
     // MARK: - properties
     // data source
-    var dataSource: DataSource!
+    var dataSource: DataSource?
     var saveDelegate: SaveRecipeDelegate!
     
     // model
@@ -83,7 +83,7 @@ class RecipeListTableViewController: UITableViewController
     //
     func updateDataSource()
     {
-        dataSource.apply(model.snapshot, animatingDifferences: true)
+        dataSource?.apply(model.snapshot, animatingDifferences: true)
     }
     
     
@@ -95,7 +95,7 @@ class RecipeListTableViewController: UITableViewController
         model.snapshot.deleteAllItems()
         model.snapshot.appendSections([.main])
         model.snapshot.appendItems(items)
-        dataSource.apply(model.snapshot)
+        dataSource?.apply(model.snapshot)
     }
     
     
@@ -105,7 +105,7 @@ class RecipeListTableViewController: UITableViewController
     func addItem(_ item: ViewModel.Item)
     {
         model.snapshot.appendItems([item])
-        dataSource.apply(model.snapshot)
+        dataSource?.apply(model.snapshot)
     }
     
     
@@ -115,7 +115,7 @@ class RecipeListTableViewController: UITableViewController
     func removeItem(_ item: ViewModel.Item)
     {
         model.snapshot.deleteItems([item])
-        dataSource.apply(model.snapshot)
+        dataSource?.apply(model.snapshot)
     }
 }
 
