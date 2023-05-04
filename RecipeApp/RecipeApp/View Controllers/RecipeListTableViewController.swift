@@ -117,6 +117,21 @@ class RecipeListTableViewController: UITableViewController
         model.snapshot.deleteItems([item])
         dataSource?.apply(model.snapshot)
     }
+    
+    //
+    // get cell for recipe
+    //
+    func cellFor(recipe: RecipeListItem) -> RecipeListCell?
+    {
+        guard
+            let indexPath = dataSource?.indexPath(for: recipe),
+            let cell = tableView.cellForRow(at: indexPath) as? RecipeListCell
+        else {
+            return nil
+        }
+        
+        return cell
+    }
 }
 
 
