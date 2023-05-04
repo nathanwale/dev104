@@ -104,7 +104,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
         savedRecipesViewController.recipeWasSaved(recipe)
         
         // tell searched recipes VC
-        searchedRecipesViewController.updateSaveSate(recipe: recipe, saved: true)
+        searchedRecipesViewController.updateSaveState(recipe: recipe, saved: true)
     }
     
     //
@@ -119,7 +119,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
         savedRecipesViewController.recipeWasUnsaved(recipe)
         
         // tell searched recipes VC
-        searchedRecipesViewController.updateSaveSate(recipe: recipe, saved: false)
+        searchedRecipesViewController.updateSaveState(recipe: recipe, saved: false)
     }
     
 }

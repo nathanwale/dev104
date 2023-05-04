@@ -52,7 +52,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
     //
     // update an item that's had it's save state changed
     //
-    func updateSaveSate(recipe: RecipeListItem, saved: Bool)
+    func updateSaveState(recipe: RecipeListItem, saved: Bool)
     {
         if let indexPath = dataSource.indexPath(for: recipe) {
             let cell = tableView.cellForRow(at: indexPath) as! RecipeListCell
