@@ -16,8 +16,11 @@ class RecipeListCell: UITableViewCell
     
     
     // MARK: - properties
+    var recipe: RecipeListItem!
+    var saveDelegate: SaveRecipeDelegate!
     var fetchImageTask: Task<Void, Never>? = nil
     var saved = false
+    
     
     // MARK: - lifecycle
     // cancel fetch image task on deinit
@@ -25,16 +28,34 @@ class RecipeListCell: UITableViewCell
         fetchImageTask?.cancel()
     }
     
+    
     // MARK: - update
-    func update(with recipeListItem: RecipeListItem, saved: Bool)
+    //
+    // update recipe details
+    //
+    func update(
+        with recipeListItem: RecipeListItem,
+        saved: Bool,
+        saveDelegate: SaveRecipeDelegate)
     {
+        // assign properties
+        self.recipe = recipeListItem
         self.saved = saved
+        self.saveDelegate = saveDelegate
+        
+        // update save button state
         updateSaveButton()
+        
+        // update labels and image
         nameLabel.text = recipeListItem.name
         fetchImage(for: recipeListItem.imageUrl)
         recipeImageView.layer.cornerRadius = 10
     }
     
+    
+    //
+    // update save buton state
+    //
     func updateSaveButton()
     {
         if saved {
@@ -45,11 +66,35 @@ class RecipeListCell: UITableViewCell
     }
     
     
+    //
+    // update recipe saved state
+    //
+    func updateRecipeSavedState()
+    {
+        // are we saving or unsaving?
+        if saved {
+            saveDelegate.save(recipe: recipe)
+        } else {
+            saveDelegate.unsave(recipe: recipe)
+        }
+    }
+    
+    
     // MARK: - actions
+    //
+    // When save button pressed:
+    //  - update save button state
+    //  - save or unsave
+    //
     @IBAction func savePressed()
     {
         saved.toggle()
+        
+        // update button
         updateSaveButton()
+        
+        // save or unsave recipe
+        updateRecipeSavedState()
     }
     
     
