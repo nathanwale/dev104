@@ -98,7 +98,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
     func save(recipe: RecipeListItem)
     {
         // tell user store
-        UserStore.save(recipe: recipe)
+        UserStore.recipeStore.save(recipe: recipe)
         
         // tell saved recipes VC
         savedRecipesViewController.recipeWasSaved(recipe)
@@ -113,7 +113,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
     func unsave(recipe: RecipeListItem)
     {
         // tell user store
-        UserStore.unsave(recipe: recipe)
+        UserStore.recipeStore.unsave(recipe: recipe)
         
         // tell saved recipes VC
         savedRecipesViewController.recipeWasUnsaved(recipe)

@@ -68,7 +68,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
     //
     override func loadItems()
     {
-        replaceItems(items: UserStore.savedRecipes)
+        replaceItems(items: UserStore.recipeStore.savedRecipes)
     }
     
     //

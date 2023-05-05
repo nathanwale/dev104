@@ -193,7 +193,7 @@ extension RecipeListTableViewController
         func isSaved(itemId: ViewModel.ItemId) -> Bool
         {
             let item = itemStore[itemId]!
-            return UserStore.savedRecipes.contains(item)
+            return UserStore.recipeStore.savedRecipes.contains(item)
         }
     }
 }
