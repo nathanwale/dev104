@@ -11,5 +11,5 @@ fileprivate let demoUrl = URL(string: "https://external-content.duckduckgo.com/i
 
 struct UserStore
 {
-    static var recipeStore = UserRecipeStore()
+   
 }
