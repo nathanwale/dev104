@@ -11,6 +11,7 @@ class RecipeListTableViewController: UITableViewController
 {
     // reuse id for table cells
     let reuseIdentifier = "Recipe"
+    let emptyMessageCellIdentifier = "Empty"
     let cellNibName = "RecipeTableCell"
     
     // MARK: - properties
@@ -37,6 +38,7 @@ class RecipeListTableViewController: UITableViewController
         dataSource = createDataSource()
         tableView.dataSource = dataSource
         
+        
         // load items. this method is for specialisation in subclasses
         loadItems()
     }
@@ -56,28 +58,53 @@ class RecipeListTableViewController: UITableViewController
             (tableView, indexPath, itemId) -> UITableViewCell?
             in
             
-            // get item from store
-            let item = self.model.itemStore[itemId]!
             
-            // get cell
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: self.reuseIdentifier,
-                for: indexPath) as! RecipeListCell
-            
-            // has this item been saved?
-            let saved = self.model.isSaved(itemId: itemId)
-            
-            // configure cell
-            cell.update(
-                with: item,
-                saved: saved,
-                saveDelegate: self.saveDelegate)
-            
-            // return cell
-            return cell
+            if indexPath.section == ViewModel.Section.main.rawValue {
+                // return recipe cell
+                return self.recipeCellFor(itemId: itemId, indexPath: indexPath)
+            } else {
+                // return empty table message cell
+                // (ie. to tell the user there's nothing here yet)
+                return self.emptyMessageCell()
+            }
         }
         
         return dataSource
+    }
+    
+    
+    //
+    // Recipe cell for index
+    //
+    func recipeCellFor(itemId: ViewModel.ItemId, indexPath: IndexPath) -> RecipeListCell
+    {
+        // get item from store
+        let item = self.model.itemStore[itemId]!
+        
+        // get cell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: self.reuseIdentifier,
+            for: indexPath) as! RecipeListCell
+        
+        // has this item been saved?
+        let saved = self.model.isSaved(itemId: itemId)
+        
+        // configure cell
+        cell.update(
+            with: item,
+            saved: saved,
+            saveDelegate: self.saveDelegate)
+        
+        return cell
+    }
+    
+    
+    //
+    // Empty message cell
+    //
+    func emptyMessageCell() -> UITableViewCell?
+    {
+        tableView.dequeueReusableCell(withIdentifier: emptyMessageCellIdentifier)
     }
     
     
@@ -86,6 +113,17 @@ class RecipeListTableViewController: UITableViewController
     //
     func updateDataSource()
     {
+        let dummyIdentifiers = ["--empty"]
+        if model.snapshot.numberOfItems(inSection: .main) == 0 {
+            // not items, so append to empty section
+            if !model.snapshot.sectionIdentifiers.contains(.empty) {
+                model.snapshot.appendSections([.empty])
+            }
+            model.snapshot.appendItems(dummyIdentifiers, toSection: .empty)
+        } else {
+            // we have items, so delete empty section
+            model.snapshot.deleteItems(dummyIdentifiers)
+        }
         dataSource?.apply(model.snapshot, animatingDifferences: true)
     }
     
@@ -106,8 +144,8 @@ class RecipeListTableViewController: UITableViewController
         // update table datasource
         model.snapshot.deleteAllItems()
         model.snapshot.appendSections([.main])
-        model.snapshot.appendItems(itemIds)
-        dataSource?.apply(model.snapshot)
+        model.snapshot.appendItems(itemIds, toSection: .main)
+        updateDataSource()
     }
     
     
@@ -117,8 +155,8 @@ class RecipeListTableViewController: UITableViewController
     func addItem(_ item: RecipeListItem)
     {
         model.itemStore[item.identifier] = item
-        model.snapshot.appendItems([item.identifier])
-        dataSource?.apply(model.snapshot)
+        model.snapshot.appendItems([item.identifier], toSection: .main)
+        updateDataSource()
     }
     
     
@@ -129,11 +167,12 @@ class RecipeListTableViewController: UITableViewController
     {
         // remove from table datasource
         model.snapshot.deleteItems([item.identifier])
-        dataSource?.apply(model.snapshot)
+        updateDataSource()
         
         // remove from model store
         model.itemStore.removeValue(forKey: item.identifier)
     }
+    
     
     //
     // update item
@@ -145,8 +184,9 @@ class RecipeListTableViewController: UITableViewController
         }
         let itemIds = items.map { $0.identifier }
         model.snapshot.reloadItems(itemIds)
-        dataSource?.apply(model.snapshot)
+        updateDataSource()
     }
+    
     
     //
     // get cell for recipe
@@ -177,7 +217,12 @@ extension RecipeListTableViewController
     // view model
     enum ViewModel
     {
-        enum Section { case main }
+        enum Section: Int {
+            case main
+            case empty
+            
+            static let all: [Self] = [.main, .empty]
+        }
         typealias ItemId = RecipeIdentifier
     }
     
