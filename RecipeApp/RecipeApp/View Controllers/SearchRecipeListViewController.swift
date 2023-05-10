@@ -12,22 +12,39 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     // search task
     var searchTask: Task<Void, Never>? = nil
+    var searchController = UISearchController()
     
     deinit {
         searchTask?.cancel()
     }
     
-    override func loadItems()
+    override func viewDidLoad()
     {
-        fetchSearchedItems(searchTerm: "chicken")
+        super.viewDidLoad()
+        configureSearch()
     }
 
     // MARK: - search
     //
+    // configure search
+    //
+    func configureSearch()
+    {
+         
+        navigationItem.searchController = searchController
+        searchController.isActive = true
+        searchController.searchResultsUpdater = self
+        searchController.automaticallyShowsSearchResultsController = true
+    }
+    
+    
+    //
     // search recipes for `searchTerm`
     //
-    func fetchSearchedItems(searchTerm: String)
+    @objc func fetchSearchedItems()
     {
+        let searchTerm = searchController.searchBar.text ?? ""
+        print("Searching for ", searchTerm)
         let request = RecipeSearchRequest(searchTerm: searchTerm)
         // cancel task if exists
         searchTask?.cancel()
@@ -60,5 +77,18 @@ class SearchRecipeListViewController: RecipeListTableViewController
         
         cell.saved = saved
         cell.updateSaveButton()
+    }
+}
+
+
+
+//
+// Conformance to UISearchResultsUpdating
+//
+extension SearchRecipeListViewController: UISearchResultsUpdating
+{
+    func updateSearchResults(for searchController: UISearchController) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(fetchSearchedItems), object: nil)
+        perform(#selector(fetchSearchedItems), with: nil, afterDelay: 0.3)
     }
 }
