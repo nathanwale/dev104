@@ -7,58 +7,25 @@
 
 import UIKit
 
-class RecipeContainerViewController: UIViewController
+class RecipeContainerViewController: UITabBarController
 {
-    // outlets
-    // segment control
-    @IBOutlet var segmentedControl: UISegmentedControl!
-    
-    // container view that contains the embedded tab bar controller
-    @IBOutlet var containerView: UIView!
-    
-    // embedded tab bar controller
-    var embeddedTabBarController: UITabBarController!
     
     // attached view controllers
     var savedRecipesViewController: FavouriteRecipesViewController!
     var searchedRecipesViewController: SearchRecipeListViewController!
-    
-    enum Segment: String {
-        case favourites = "Favourites"
-        case search = "Search"
-        case categories = "Categories"
-        
-        static var order: [Self] {
-            [.favourites, .search, .categories]
-        }
-        
-        static func forIndex(index: Int) -> Self
-        {
-            order[index]
-        }
-        
-        var segueIdentifier: String {
-            switch self {
-                case .favourites:
-                    return "showFavourites"
-                case .search:
-                    return "showSearch"
-                case .categories:
-                    return "showCategories"
-            }
-        }
-    }
-    
+   
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        // assign embedded tabbar controller
-        embeddedTabBarController = (children.first as! UITabBarController)
-        
+        let recipeControllers = viewControllers!.compactMap {
+            $0.children.first as? RecipeListTableViewController
+        }
+        print(recipeControllers)
         // assign child VCs to properties
-        for vc in embeddedTabBarController.viewControllers! {
+        for vc in recipeControllers {
+            print(vc)
             // faves controller
             if let vc = vc as? FavouriteRecipesViewController {
                 savedRecipesViewController = vc
@@ -71,21 +38,7 @@ class RecipeContainerViewController: UIViewController
                 searchedRecipesViewController.saveDelegate = self
             }
         }
-        
-        for (i, segment) in Segment.order.enumerated() {
-            segmentedControl.setTitle(segment.rawValue, forSegmentAt: i)
-        }
     }
-
-    @IBAction func switchEmbeddedView(_ sender: UISegmentedControl)
-    {
-        // get selected segment and select it
-        let i = sender.selectedSegmentIndex
-        embeddedTabBarController.selectedIndex = i
-    }
-    
-    
-    
 }
 
 
@@ -97,6 +50,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
     //
     func save(recipe: RecipeListItem)
     {
+        print("Saving", recipe.name)
         // tell user store
         UserRecipeStore.shared.save(recipe: recipe)
         
@@ -112,6 +66,7 @@ extension RecipeContainerViewController: SaveRecipeDelegate
     //
     func unsave(recipe: RecipeListItem)
     {
+        print("Unsaving", recipe.name)
         // tell user store
         UserRecipeStore.shared.unsave(recipe: recipe)
         
