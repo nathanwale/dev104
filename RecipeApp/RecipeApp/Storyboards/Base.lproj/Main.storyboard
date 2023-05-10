@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,7 +57,7 @@
         <!--Recipes-->
         <scene sceneID="end-en-sat">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Tjk-3Z-rDh" customClass="RecipeContainerViewController" customModule="RecipeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Tjk-3Z-rDh" customClass="RootNavigationViewController" customModule="RecipeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Recipes" largeTitleDisplayMode="always" id="F83-PK-FNw"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4FG-D2-Qfj">
@@ -75,62 +74,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoq-zk-0nV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1523" y="-10"/>
-        </scene>
-        <!--Recipes-->
-        <scene sceneID="Fb0-SY-4SO">
-            <objects>
-                <viewController id="wZL-Bj-tod" customClass="RecipeContainerViewController" customModule="RecipeApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="YrR-s9-pgV">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="R0T-i8-kg0">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqg-ih-ziF">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="40.666666666666664"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Fpf-c7-nLm">
-                                        <rect key="frame" x="0.0" y="48.666666666666679" width="393" height="125.33333333333331"/>
-                                        <segments>
-                                            <segment title="Saved"/>
-                                            <segment title="Search"/>
-                                            <segment title="Categories"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="switchEmbeddedView:" destination="wZL-Bj-tod" eventType="valueChanged" id="PlH-eE-MZW"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhe-P4-hPy">
-                                        <rect key="frame" x="0.0" y="181" width="393" height="578"/>
-                                        <connections>
-                                            <segue destination="Hxu-vD-AIy" kind="embed" id="rMs-Qf-OWZ"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Ryv-5Y-c3J"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="R0T-i8-kg0" firstAttribute="top" secondItem="Ryv-5Y-c3J" secondAttribute="top" id="6Hp-qy-hvE"/>
-                            <constraint firstItem="Ryv-5Y-c3J" firstAttribute="trailing" secondItem="R0T-i8-kg0" secondAttribute="trailing" id="d27-qe-YKm"/>
-                            <constraint firstItem="R0T-i8-kg0" firstAttribute="leading" secondItem="Ryv-5Y-c3J" secondAttribute="leading" id="dbg-JK-CXN"/>
-                            <constraint firstItem="Ryv-5Y-c3J" firstAttribute="bottom" secondItem="R0T-i8-kg0" secondAttribute="bottom" id="vUJ-So-T3v"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Recipes" image="fork.knife.circle.fill" catalog="system" id="Bhf-vL-QYo"/>
-                    <connections>
-                        <outlet property="containerView" destination="mhe-P4-hPy" id="WgN-FR-eLo"/>
-                        <outlet property="segmentedControl" destination="Fpf-c7-nLm" id="8eP-XZ-Paa"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kcy-UQ-SVs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1921" y="-795"/>
         </scene>
         <!--Search Recipes-->
         <scene sceneID="z5w-to-oNd">
@@ -177,21 +120,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yef-ON-OX1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1521" y="1551"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="QDg-Gv-cRm">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Hxu-vD-AIy" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" hidden="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="centered" id="fbi-BV-3Jh">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1rL-Jh-awO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2827" y="-494"/>
         </scene>
         <!--Categories-->
         <scene sceneID="01F-A9-7hz">
