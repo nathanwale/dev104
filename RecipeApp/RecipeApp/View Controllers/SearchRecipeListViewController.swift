@@ -30,11 +30,20 @@ class SearchRecipeListViewController: RecipeListTableViewController
     //
     func configureSearch()
     {
-         
+        // attach search controller to nav
         navigationItem.searchController = searchController
+        
+        // activate from start
         searchController.isActive = true
+        
+        // This VC is the search results updater
         searchController.searchResultsUpdater = self
+        
+        // automatically show results
         searchController.automaticallyShowsSearchResultsController = true
+        
+        // don't hide nav bar when searching
+        searchController.hidesNavigationBarDuringPresentation = false
     }
     
     
@@ -43,22 +52,37 @@ class SearchRecipeListViewController: RecipeListTableViewController
     //
     @objc func fetchSearchedItems()
     {
-        let searchTerm = searchController.searchBar.text ?? ""
+        guard
+            let searchTerm = searchController.searchBar.text,
+            searchTerm != ""
+        else {
+            // search field is empty or undefined. bail.
+            return
+        }
+        
         print("Searching for ", searchTerm)
+        
+        // create search request
         let request = RecipeSearchRequest(searchTerm: searchTerm)
+        
         // cancel task if exists
         searchTask?.cancel()
         
+        // create search task
         searchTask = Task {
             do {
+                // fetch results and place in table
                 let items = try await request.fetchSearchResults()
                 replaceItems(items: items)
             } catch {
+                // on error empty table and print error
                 replaceItems(items: [])
                 print(error)
             }
+            
             // update datasource
             updateDataSource()
+            
             // finish task
             searchTask = nil
         }
