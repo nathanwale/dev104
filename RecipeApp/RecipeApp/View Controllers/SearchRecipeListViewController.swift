@@ -24,6 +24,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
         configureSearch()
     }
 
+    
     // MARK: - search
     //
     // configure search
@@ -44,6 +45,24 @@ class SearchRecipeListViewController: RecipeListTableViewController
         
         // don't hide nav bar when searching
         searchController.hidesNavigationBarDuringPresentation = false
+        
+        // don't hid background when searching
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        // add tab gesture recogniser to end search
+        // when pressing outside search bar
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endSearch))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    
+    //
+    // end searching
+    //
+    @objc func endSearch()
+    {
+        searchController.isActive = false
     }
     
     
