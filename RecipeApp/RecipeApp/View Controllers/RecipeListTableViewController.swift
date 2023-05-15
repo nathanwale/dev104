@@ -242,3 +242,32 @@ extension RecipeListTableViewController
         }
     }
 }
+
+
+// MARK: - nav
+extension RecipeListTableViewController
+{
+    //
+    // Prepare for segue for showing recipe detail
+    //
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if
+            let itemId = sender as? RecipeIdentifier,
+            let vc = segue.destination as? RecipeDetailViewController
+        {
+            vc.configure(recipeIdentifier: itemId)
+        }
+    }
+    
+    //
+    // Row was selected, perform show recipe segue
+    //
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let itemId = dataSource?.itemIdentifier(for: indexPath) else {
+            return
+        }
+
+        performSegue(withIdentifier: "ShowRecipeDetail", sender: itemId)
+    }
+}
