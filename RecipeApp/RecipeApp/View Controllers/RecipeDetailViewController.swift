@@ -110,8 +110,12 @@ class RecipeDetailViewController: UIViewController
     //
     // Fetch recipe image
     //
-    func fetchImage(for url: URL)
+    func fetchImage(for url: URL?)
     {
+        guard let url = url else {
+            return
+        }
+        
         let request = ImageRequest(url: url)
         
         // cancel image task if it exists

@@ -29,8 +29,8 @@ struct RecipeDetail
     let category: RecipeCategory
     let region: String
     let instructions: String
-    let imageUrl: URL
-    let videoUrl: URL
+    let imageUrl: URL?
+    let videoUrl: URL?
     let tags: [String]
     let ingredients: [IngredientMeasurement]
 }
@@ -91,8 +91,8 @@ extension RecipeDetail: Decodable
         category = try values.decode(RecipeCategory.self, forKey: .category)
         region = try values.decode(String.self, forKey: .region)
         instructions = try values.decode(String.self, forKey: .instructions)
-        imageUrl = try values.decode(URL.self, forKey: .imageUrl)
-        videoUrl = try values.decode(URL.self, forKey: .videoUrl)
+        imageUrl = try? values.decode(URL.self, forKey: .imageUrl)
+        videoUrl = try? values.decode(URL.self, forKey: .videoUrl)
         
         // decode tags and split into list of tags
         let tagString = try values.decode(String?.self, forKey: .tagString) ?? ""
