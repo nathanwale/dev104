@@ -155,7 +155,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="247" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="754" translatesAutoresizingMaskIntoConstraints="NO" id="HqN-Ef-SXj">
-                                                <rect key="frame" x="0.0" y="281" width="361" height="100"/>
+                                                <rect key="frame" x="0.0" y="280.66666666666669" width="361" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="Ade-o8-kGp"/>
                                                 </constraints>
@@ -292,6 +292,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="xxa-um-DwF" kind="show" destinationCreationSelector="showRecipesForCategory:sender:" id="jPy-Gt-nKy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -362,9 +365,58 @@
             </objects>
             <point key="canvasLocation" x="2331" y="806"/>
         </scene>
+        <!--Recipes for Category-->
+        <scene sceneID="qYc-su-h2W">
+            <objects>
+                <tableViewController title="Recipes for Category" id="xxa-um-DwF" customClass="RecipesForCategoryViewController" customModule="RecipeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="hil-X4-aza">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Recipe" id="bOP-iI-heL">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bOP-iI-heL" id="Nyg-85-0vK">
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="8X7-bu-gpo" kind="show" identifier="ShowRecipeDetail" id="UYT-Qw-E6j"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="Empty" textLabel="eZF-9q-CPC" style="IBUITableViewCellStyleDefault" id="LTs-3w-JIa">
+                                <rect key="frame" x="0.0" y="93.666667938232422" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LTs-3w-JIa" id="VL5-dW-sE0">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="No recipes for this category" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eZF-9q-CPC">
+                                            <rect key="frame" x="20" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xxa-um-DwF" id="pIK-Ow-sGf"/>
+                            <outlet property="delegate" destination="xxa-um-DwF" id="BCH-fd-sAK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Recipes for Category" id="nYN-iW-m67"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uC3-7i-g8E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3103" y="1551"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="izi-an-vdP"/>
+        <segue reference="UYT-Qw-E6j"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="fork.knife.circle.fill" catalog="system" width="128" height="123"/>
