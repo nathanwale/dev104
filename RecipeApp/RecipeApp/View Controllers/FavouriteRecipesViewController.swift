@@ -71,6 +71,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
         replaceItems(items: UserRecipeStore.shared.savedRecipes)
     }
     
+    
     //
     // recipe was saved, add to snapshot
     //
@@ -79,6 +80,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
         addItem(recipe)
         newlyAddedRecipes.append(recipe)
     }
+    
     
     //
     // recipe was unsaved, remove from snapshot
