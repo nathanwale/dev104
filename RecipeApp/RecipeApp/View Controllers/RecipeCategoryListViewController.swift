@@ -11,6 +11,7 @@ import UIKit
 class RecipeCategoryListViewController: UITableViewController
 {
     let reuseIdentifier = "RecipeCategory"
+    var saveDelegate: SaveRecipeDelegate!
     
     // MARK: - items
     //
@@ -46,13 +47,49 @@ class RecipeCategoryListViewController: UITableViewController
     
     
     // MARK: - sections
+    //
+    // Number of sections
+    //
     override func numberOfSections(in tableView: UITableView) -> Int {
         categories.keys.count
     }
     
+    
+    //
+    // Number of rows in section
+    //
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = sectionOrder[section]
         return categories[key]!.count
+    }
+    
+    
+    // MARK: - datasource
+    func selectedCategory() -> RecipeCategory?
+    {
+        guard
+            let indexPath = tableView.indexPathForSelectedRow,
+            let key = Optional(sectionOrder[indexPath.section]),
+            let category = categories[key]?[indexPath.row]
+        else {
+            return nil
+        }
+        
+        return category
+    }
+    
+    
+    // MARK: - navigation
+    //
+    // Show recipes segue
+    //
+    @IBSegueAction func showRecipesForCategory(_ coder: NSCoder, sender: Any?) -> RecipesForCategoryViewController?
+    {
+        let category = selectedCategory()!
+        return RecipesForCategoryViewController(
+            coder: coder,
+            category: category,
+            saveDelegate: saveDelegate)
     }
 }
 
@@ -95,4 +132,6 @@ extension RecipeCategoryListViewController
         ]
     }
 }
+
+
 
