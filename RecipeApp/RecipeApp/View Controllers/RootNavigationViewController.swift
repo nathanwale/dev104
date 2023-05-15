@@ -24,20 +24,27 @@ class RootNavigationViewController: UITabBarController
         }
 
         // assign child VCs to properties
-        for vc in recipeControllers {
+        for vc in recipeControllers
+        {
+            // attach save delegate
+            vc.saveDelegate = self
             
-            // faves controller
+            // assign faves controller
             if let vc = vc as? FavouriteRecipesViewController {
                 savedRecipesViewController = vc
-                savedRecipesViewController.saveDelegate = self
             }
             
             // search controller
             if let vc = vc as? SearchRecipeListViewController {
                 searchedRecipesViewController = vc
-                searchedRecipesViewController.saveDelegate = self
             }
         }
+        
+        let categoriesController = viewControllers!.compactMap {
+            $0.children.first as? RecipeCategoryListViewController
+        }
+        
+        categoriesController.first?.saveDelegate = self
     }
 }
 
