@@ -106,21 +106,6 @@ class SearchRecipeListViewController: RecipeListTableViewController
             searchTask = nil
         }
     }
-    
-    
-    // MARK: - update
-    //
-    // update an item that's had its save state changed
-    //
-    func updateSaveState(recipe: RecipeListItem, saved: Bool)
-    {
-        guard let cell = cellFor(recipe: recipe) else {
-            return
-        }
-        
-        cell.saved = saved
-        cell.updateSaveButton()
-    }
 }
 
 
