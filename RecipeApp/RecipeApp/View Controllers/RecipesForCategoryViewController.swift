@@ -22,7 +22,8 @@ class RecipesForCategoryViewController: RecipeListTableViewController
     {
         self.category = category
         super.init(coder: coder)
-        self.saveDelegate = saveDelegate
+        self.saveRecipeDelegate = saveDelegate
+        saveRecipeDelegate.registerRecipeListController(self)
     }
     
     

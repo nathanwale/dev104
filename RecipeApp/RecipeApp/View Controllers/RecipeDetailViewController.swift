@@ -7,7 +7,9 @@
 
 import UIKit
 
-class RecipeDetailViewController: UIViewController
+class RecipeDetailViewController:
+    UIViewController,
+    RequiresSaveRecipeDelegate
 {
     // MARK: - outlets
     @IBOutlet var nameLabel: UILabel!
@@ -19,6 +21,7 @@ class RecipeDetailViewController: UIViewController
     // MARK: - properties
     // recipe ID
     var recipeIdentifier: RecipeIdentifier!
+    var saveRecipeDelegate: SaveRecipeDelegate!
     
     // tasks for fetching detail and image
     var fetchDetailTask: Task<Void, Never>? = nil

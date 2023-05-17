@@ -8,10 +8,12 @@
 import UIKit
 
 
-class RecipeCategoryListViewController: UITableViewController
+class RecipeCategoryListViewController:
+    UITableViewController,
+    RequiresSaveRecipeDelegate
 {
     let reuseIdentifier = "RecipeCategory"
-    var saveDelegate: SaveRecipeDelegate!
+    var saveRecipeDelegate: SaveRecipeDelegate!
     
     // MARK: - items
     //
@@ -89,7 +91,7 @@ class RecipeCategoryListViewController: UITableViewController
         return RecipesForCategoryViewController(
             coder: coder,
             category: category,
-            saveDelegate: saveDelegate)
+            saveDelegate: saveRecipeDelegate)
     }
 }
 
