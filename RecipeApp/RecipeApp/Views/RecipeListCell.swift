@@ -38,6 +38,7 @@ class RecipeListCell: UITableViewCell
         saved: Bool,
         saveDelegate: SaveRecipeDelegate)
     {
+        accessoryType = .disclosureIndicator
         // assign properties
         self.recipe = recipeListItem
         self.saved = saved
