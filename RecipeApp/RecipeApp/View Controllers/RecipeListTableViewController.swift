@@ -7,7 +7,9 @@
 
 import UIKit
 
-class RecipeListTableViewController: UITableViewController
+class RecipeListTableViewController:
+    UITableViewController,
+    RequiresSaveRecipeDelegate
 {
     // reuse id for table cells
     let reuseIdentifier = "Recipe"
@@ -17,7 +19,7 @@ class RecipeListTableViewController: UITableViewController
     // MARK: - properties
     // data source
     var dataSource: DataSource?
-    var saveDelegate: SaveRecipeDelegate!
+    var saveRecipeDelegate: SaveRecipeDelegate!
     
     // model
     private var model = Model()
@@ -93,7 +95,7 @@ class RecipeListTableViewController: UITableViewController
         cell.update(
             with: item,
             saved: saved,
-            saveDelegate: self.saveDelegate)
+            saveDelegate: self.saveRecipeDelegate)
         
         return cell
     }
@@ -204,6 +206,22 @@ class RecipeListTableViewController: UITableViewController
         // return found cell
         return cell
     }
+    
+    
+    // MARK: - save handling
+    //
+    // update an item that's had its save state changed
+    //
+    func updateSaveState(recipe: RecipeListItem, saved: Bool)
+    {
+        guard let cell = cellFor(recipe: recipe) else {
+            return
+        }
+        
+        cell.saved = saved
+        cell.updateSaveButton()
+    }
+    
 }
 
 
