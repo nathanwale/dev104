@@ -18,8 +18,8 @@
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="C9G-HJ-d3Z">
                     <rect key="frame" x="8" y="8" width="554" height="100"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lwu-a9-9w8">
-                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fork.knife.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="lwu-a9-9w8">
+                            <rect key="frame" x="0.0" y="1" width="100" height="98.666666666666671"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="21l-Np-HYX"/>
                                 <constraint firstAttribute="width" constant="100" id="8Gt-E1-Qu3"/>
@@ -52,11 +52,53 @@
                         </stackView>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-2g-h0h" userLabel="New Indicator">
+                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OiQ-df-XMz" userLabel="Backing circle">
+                            <rect key="frame" x="-12.666666666666664" y="-11.666666666666668" width="75.333333333333329" height="74"/>
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="staroflife.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="rVW-aX-kiX" userLabel="shadow">
+                            <rect key="frame" x="3" y="3.3333333333333321" width="50" height="49.333333333333343"/>
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="fOX-81-gP0"/>
+                                <constraint firstAttribute="height" constant="50" id="xEm-FY-vdJ"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="staroflife.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TYa-li-M2V">
+                            <rect key="frame" x="0.0" y="0.33333333333333215" width="50" height="49.333333333333343"/>
+                            <color key="tintColor" systemColor="systemYellowColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="SGk-Wq-w0K"/>
+                                <constraint firstAttribute="height" constant="50" id="wH4-dI-aWv"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="4i8-S5-tek"/>
+                        <constraint firstItem="OiQ-df-XMz" firstAttribute="centerX" secondItem="TYa-li-M2V" secondAttribute="centerX" id="8E4-gD-UYF"/>
+                        <constraint firstItem="rVW-aX-kiX" firstAttribute="top" secondItem="T9w-2g-h0h" secondAttribute="top" constant="3" id="Anv-5E-Kga"/>
+                        <constraint firstItem="OiQ-df-XMz" firstAttribute="height" secondItem="TYa-li-M2V" secondAttribute="height" multiplier="1.5" id="NLx-CE-khi"/>
+                        <constraint firstItem="TYa-li-M2V" firstAttribute="leading" secondItem="T9w-2g-h0h" secondAttribute="leading" id="OfV-qg-f79"/>
+                        <constraint firstItem="rVW-aX-kiX" firstAttribute="width" secondItem="TYa-li-M2V" secondAttribute="width" id="P7k-0p-nKC"/>
+                        <constraint firstItem="OiQ-df-XMz" firstAttribute="centerY" secondItem="TYa-li-M2V" secondAttribute="centerY" id="hcs-li-8Kq"/>
+                        <constraint firstItem="rVW-aX-kiX" firstAttribute="height" secondItem="TYa-li-M2V" secondAttribute="height" id="kSW-LO-2uF"/>
+                        <constraint firstItem="TYa-li-M2V" firstAttribute="top" secondItem="T9w-2g-h0h" secondAttribute="top" id="pTL-24-Ysq"/>
+                        <constraint firstItem="rVW-aX-kiX" firstAttribute="leading" secondItem="T9w-2g-h0h" secondAttribute="leading" constant="3" id="rCS-ks-4L1"/>
+                        <constraint firstItem="OiQ-df-XMz" firstAttribute="width" secondItem="TYa-li-M2V" secondAttribute="width" multiplier="1.5" id="rog-e8-psk"/>
+                        <constraint firstAttribute="height" constant="100" id="ujW-cQ-gVg"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q2r-Tu-aEm"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="T9w-2g-h0h" firstAttribute="top" secondItem="RmN-eH-WBP" secondAttribute="top" id="6FA-1X-tGC"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="C9G-HJ-d3Z" secondAttribute="bottom" constant="8" id="8GR-59-caS"/>
+                <constraint firstItem="T9w-2g-h0h" firstAttribute="leading" secondItem="RmN-eH-WBP" secondAttribute="leading" id="Yhk-NM-11u"/>
                 <constraint firstItem="C9G-HJ-d3Z" firstAttribute="leading" secondItem="Q2r-Tu-aEm" secondAttribute="leading" constant="8" id="ZO4-mx-Ixc"/>
                 <constraint firstItem="C9G-HJ-d3Z" firstAttribute="top" secondItem="RmN-eH-WBP" secondAttribute="top" constant="8" id="aEa-xx-NAb"/>
                 <constraint firstItem="Q2r-Tu-aEm" firstAttribute="trailing" secondItem="C9G-HJ-d3Z" secondAttribute="trailing" constant="8" id="sbf-fZ-RzL"/>
@@ -66,6 +108,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="nameLabel" destination="GcT-n0-fh4" id="UtD-zR-6nm"/>
+                <outlet property="newRecipeIndicator" destination="T9w-2g-h0h" id="med-15-NaZ"/>
                 <outlet property="recipeImageView" destination="lwu-a9-9w8" id="EED-re-Ubj"/>
                 <outlet property="saveButton" destination="oJi-vU-iOB" id="doE-jg-gb3"/>
             </connections>
@@ -73,8 +116,14 @@
         </view>
     </objects>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="123"/>
+        <image name="fork.knife.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="staroflife.fill" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

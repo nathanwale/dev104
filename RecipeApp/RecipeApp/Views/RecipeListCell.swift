@@ -13,6 +13,7 @@ class RecipeListCell: UITableViewCell
     @IBOutlet var recipeImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var saveButton: UIButton!
+    @IBOutlet var newRecipeIndicator: UIView!
     
     
     // MARK: - properties
@@ -89,13 +90,33 @@ class RecipeListCell: UITableViewCell
     //
     func updateNewlyAdded()
     {
-        if recipe.newlyAdded {
-            backgroundColor = .green
-        } else {
-            backgroundColor = .systemBackground
-        }
+        newRecipeIndicator.isHidden = !recipe.newlyAdded
+        animateNewIndicator()
     }
     
+    
+    // MARK: - animation
+    func animateNewIndicator()
+    {
+        if recipe.newlyAdded {
+            for view in self.newRecipeIndicator.subviews {
+                view.tag
+                UIView.animate(
+                    withDuration: 2.0,
+                    delay: 0,
+                    usingSpringWithDamping: 0.6,
+                    initialSpringVelocity: 0.1,
+                    options: [.repeat])
+                {
+                        
+                    view.transform = view.transform.rotated(by: .pi * 1)
+                    view.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                }
+            }
+        } else {
+            newRecipeIndicator.layer.removeAllAnimations()
+        }
+    }
     
     // MARK: - actions
     //
