@@ -143,8 +143,9 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="I09-dc-ldS">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="569"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="746" verticalCompressionResistancePriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="oR6-na-pN5">
-                                                <rect key="frame" x="0.0" y="0.0" width="361" height="200"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="746" verticalCompressionResistancePriority="747" image="photo.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oR6-na-pN5">
+                                                <rect key="frame" x="0.0" y="1.6666666666666572" width="361" height="197"/>
+                                                <color key="tintColor" systemColor="tertiaryLabelColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="HEQ-Bx-wr1"/>
                                                 </constraints>
@@ -201,12 +202,34 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="EaZ-I6-tk8"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="afb-CE-crp"/>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ca-XQ-5t2" userLabel="Loading Overlay">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.dotted" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qHZ-Ta-VQd">
+                                        <rect key="frame" x="76.666666666666686" y="213.66666666666669" width="240" height="238.66666666666669"/>
+                                        <color key="tintColor" systemColor="tertiaryLabelColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="qHZ-Ta-VQd" secondAttribute="height" multiplier="1:1" id="SvL-jM-h6P"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="qHZ-Ta-VQd" firstAttribute="centerY" secondItem="6Ca-XQ-5t2" secondAttribute="centerY" id="5uQ-2k-4tx"/>
+                                    <constraint firstItem="qHZ-Ta-VQd" firstAttribute="width" secondItem="6Ca-XQ-5t2" secondAttribute="width" multiplier="0.610687" id="edW-iI-Kb1"/>
+                                    <constraint firstItem="qHZ-Ta-VQd" firstAttribute="centerX" secondItem="6Ca-XQ-5t2" secondAttribute="centerX" id="mFk-v3-PhU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EDx-Cq-kcn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="EDx-Cq-kcn" firstAttribute="bottom" secondItem="6Ca-XQ-5t2" secondAttribute="bottom" id="3i9-2P-caL"/>
                             <constraint firstItem="EDx-Cq-kcn" firstAttribute="bottom" secondItem="FUH-a4-tmY" secondAttribute="bottom" id="Cua-A1-ojg"/>
+                            <constraint firstItem="6Ca-XQ-5t2" firstAttribute="leading" secondItem="EDx-Cq-kcn" secondAttribute="leading" id="Xcu-Tc-oba"/>
+                            <constraint firstItem="6Ca-XQ-5t2" firstAttribute="top" secondItem="EDx-Cq-kcn" secondAttribute="top" id="Z2E-GZ-GLm"/>
                             <constraint firstItem="FUH-a4-tmY" firstAttribute="top" secondItem="dJv-cv-QEm" secondAttribute="topMargin" id="kWs-zF-cp3"/>
+                            <constraint firstItem="EDx-Cq-kcn" firstAttribute="trailing" secondItem="6Ca-XQ-5t2" secondAttribute="trailing" id="qhd-ul-5js"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FUH-a4-tmY" secondAttribute="trailing" id="tBf-vn-tWJ"/>
                             <constraint firstItem="FUH-a4-tmY" firstAttribute="leading" secondItem="dJv-cv-QEm" secondAttribute="leadingMargin" id="wPd-TB-4s9"/>
                         </constraints>
@@ -214,6 +237,7 @@
                     <navigationItem key="navigationItem" id="6Vb-ZU-Fua"/>
                     <connections>
                         <outlet property="ingredientsTableHeight" destination="Ade-o8-kGp" id="5SU-HV-YbE"/>
+                        <outlet property="loadingOverlay" destination="6Ca-XQ-5t2" id="tb5-0v-619"/>
                         <outlet property="nameLabel" destination="ex9-HK-wkk" id="faL-b9-DN5"/>
                         <outlet property="recipeImageView" destination="oR6-na-pN5" id="M23-Hr-NAX"/>
                         <outlet property="recipeInstructionsLabel" destination="YQr-HN-l3a" id="2cn-5K-Wlg"/>
@@ -529,8 +553,10 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="carrot" catalog="system" width="128" height="122"/>
+        <image name="circle.dotted" catalog="system" width="128" height="123"/>
         <image name="fork.knife.circle.fill" catalog="system" width="128" height="123"/>
         <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <image name="photo.fill" catalog="system" width="128" height="93"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
@@ -539,6 +565,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

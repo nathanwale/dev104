@@ -16,6 +16,7 @@ class RecipeDetailViewController:
     @IBOutlet var recipeImageView: UIImageView!
     @IBOutlet var recipeInstructionsLabel: UILabel!
     @IBOutlet var ingredientsTableHeight: NSLayoutConstraint!
+    @IBOutlet var loadingOverlay: UIView!
     
     
     // MARK: - properties
@@ -34,6 +35,9 @@ class RecipeDetailViewController:
     // MARK: - lifecycle
     override func viewDidLoad()
     {
+        // start loading animation
+        startLoadingAnimation()
+        
         // assign ingredients table VC
         ingredientsTableViewController = (children.first as! IngredientsTableViewController)
                 
@@ -65,6 +69,9 @@ class RecipeDetailViewController:
         
         // update ingredients table
         updateIngredientsTable(ingredients: recipeDetail.ingredients)
+        
+        // stop loading animation
+        stopLoadingAnimation()
     }
     
     
@@ -136,6 +143,41 @@ class RecipeDetailViewController:
             }
             // finish task
             fetchImageTask = nil
+        }
+    }
+    
+    
+    // MARK: - animation
+    //
+    // start loading animation for general info
+    //
+    func startLoadingAnimation()
+    {
+        loadingOverlay.isHidden = false
+        for view in loadingOverlay.subviews {
+            UIView.animate(
+                withDuration: 5.0,
+                delay: 0,
+                usingSpringWithDamping: 0.6,
+                initialSpringVelocity: 0.1,
+                options: [.repeat])
+            {
+                    
+                view.transform = view.transform.rotated(by: .pi * 1)
+                view.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            }
+        }
+    }
+    
+    
+    //
+    // stop loading animation for general info
+    //
+    func stopLoadingAnimation()
+    {
+        loadingOverlay.isHidden = true
+        for view in loadingOverlay.subviews {
+            view.layer.removeAllAnimations()
         }
     }
 }
