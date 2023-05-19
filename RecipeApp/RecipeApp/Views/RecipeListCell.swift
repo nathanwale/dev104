@@ -45,6 +45,9 @@ class RecipeListCell: UITableViewCell
         self.saved = saved
         self.saveDelegate = saveDelegate
         
+        // start image loading animation
+        startImageLoadingAnimation()
+        
         // update save button state
         updateSaveButton()
         
@@ -96,6 +99,9 @@ class RecipeListCell: UITableViewCell
     
     
     // MARK: - animation
+    //
+    // Animate indicator for new recipes
+    //
     func animateNewIndicator()
     {
         if recipe.newlyAdded {
@@ -116,6 +122,33 @@ class RecipeListCell: UITableViewCell
             newRecipeIndicator.layer.removeAllAnimations()
         }
     }
+    
+    
+    //
+    // Start loading animation for image
+    //
+    func startImageLoadingAnimation()
+    {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.0,
+            options: [.repeat, .autoreverse])
+        {
+            self.recipeImageView.alpha = 0.25
+            self.recipeImageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        }
+    }
+    
+    
+    //
+    // Stop loading animation for image
+    //
+    func stopImageLoadingAnimation()
+    {
+        recipeImageView.layer.removeAllAnimations()
+        recipeImageView.alpha = 1.0
+    }
+    
     
     // MARK: - actions
     //
@@ -152,6 +185,7 @@ class RecipeListCell: UITableViewCell
                 // fetch image and assign to `recipeImageView`
                 let image = try await request.send()
                 recipeImageView.image = image
+                stopImageLoadingAnimation()
             } catch {
                 // error
                 print(error)
