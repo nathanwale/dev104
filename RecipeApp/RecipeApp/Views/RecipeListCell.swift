@@ -100,7 +100,6 @@ class RecipeListCell: UITableViewCell
     {
         if recipe.newlyAdded {
             for view in self.newRecipeIndicator.subviews {
-                view.tag
                 UIView.animate(
                     withDuration: 2.0,
                     delay: 0,
