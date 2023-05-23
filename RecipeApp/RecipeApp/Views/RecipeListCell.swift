@@ -147,6 +147,7 @@ class RecipeListCell: UITableViewCell
     {
         recipeImageView.layer.removeAllAnimations()
         recipeImageView.alpha = 1.0
+        recipeImageView.transform = CGAffineTransform.identity
     }
     
     
