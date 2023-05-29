@@ -44,6 +44,13 @@ class RecipeListTableViewController:
         // load items. this method is for specialisation in subclasses
         loadItems()
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        // update nav
+        AppState.shared.navigation = navigationForView()
+    }
 
     
     // override to load items in subclass
@@ -222,6 +229,25 @@ class RecipeListTableViewController:
         cell.updateSaveButton()
     }
     
+    
+    // MARK: - App state nav
+    //
+    // Navigation when view appears
+    //
+    func navigationForView() -> AppNavigation
+    {
+        fatalError("navigationForView not implemented")
+    }
+    
+    
+    //
+    // Navigation when recipe row selected
+    //
+    func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
+    {
+        fatalError("navigationForSelectedRecipe(identifier: RecipeIdentifier) not implemented")
+    }
+    
 }
 
 
@@ -278,6 +304,7 @@ extension RecipeListTableViewController
         }
     }
     
+    
     //
     // Row was selected, perform show recipe segue
     //
@@ -285,7 +312,8 @@ extension RecipeListTableViewController
         guard let itemId = dataSource?.itemIdentifier(for: indexPath) else {
             return
         }
-
+        
+        AppState.shared.navigation = navigationForSelectedRecipe(identifier: itemId)
         performSegue(withIdentifier: "ShowRecipeDetail", sender: itemId)
     }
 }
