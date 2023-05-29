@@ -68,9 +68,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
     {
-        let term = searchTerm!
-        let nav = AppNavigation.search(.recipe(lastSearchedTerm, identifier))
-        return nav
+        AppNavigation.search(.recipe(lastSearchedTerm, identifier))
     }
     
     
