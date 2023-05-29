@@ -21,6 +21,8 @@ class FavouriteRecipesViewController: RecipeListTableViewController
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        
+        // mark new recipes
         markNewRecipes()
     }
     
@@ -33,6 +35,19 @@ class FavouriteRecipesViewController: RecipeListTableViewController
         super.viewDidDisappear(animated)
         unmarkNewRecipes()
     }
+    
+    
+    // MARK: - navigation
+    override func navigationForView() -> AppNavigation
+    {
+        .savedRecipes(.all)
+    }
+    
+    override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
+    {
+        .savedRecipes(.recipe(identifier))
+    }
+    
     
     // MARK: - style
     //

@@ -33,6 +33,13 @@ class IngredientListViewController:
     }
     
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        // update nav
+        AppState.shared.navigation = .ingredients(.all)
+    }
+    
+    
     // cancel fetch task on deinit
     deinit
     {

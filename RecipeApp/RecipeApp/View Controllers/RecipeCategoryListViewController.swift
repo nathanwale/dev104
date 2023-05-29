@@ -15,6 +15,14 @@ class RecipeCategoryListViewController:
     let reuseIdentifier = "RecipeCategory"
     var saveRecipeDelegate: SaveRecipeDelegate!
     
+    // MARK: - lifecycle
+    override func viewWillAppear(_ animated: Bool)
+    {
+        // update nav
+        AppState.shared.navigation = .categories(.all)
+    }
+    
+    
     // MARK: - items
     //
     // Configure cell with category text
@@ -88,6 +96,7 @@ class RecipeCategoryListViewController:
     @IBSegueAction func showRecipesForCategory(_ coder: NSCoder, sender: Any?) -> RecipesForCategoryViewController?
     {
         let category = selectedCategory()!
+        
         return RecipesForCategoryViewController(
             coder: coder,
             category: category,

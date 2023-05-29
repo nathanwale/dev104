@@ -41,6 +41,17 @@ class RecipesForCategoryViewController: RecipeListTableViewController
     }
     
     
+    // MARK: - navigation
+    override func navigationForView() -> AppNavigation {
+        .categories(.category(category))
+    }
+    
+    
+    override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation {
+        .categories(.recipe(category, identifier))
+    }
+    
+    
     // MARK: - remote
     //
     // Fetch recipes for category
