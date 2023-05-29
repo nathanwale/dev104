@@ -7,46 +7,252 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+class SceneDelegate: UIResponder, UIWindowSceneDelegate
+{
     var window: UIWindow?
+    var tabBarController: UITabBarController!
+    var saveRecipeDelegate: SaveRecipeDelegate!
+    var storyboard: UIStoryboard!
+    
+    let recipeDetailStoryboardIdentifier = "RecipeDetail"
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+    // MARK: - scene restoration
+    //
+    // Scene will connect
+    //
+    func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity?)
+    {
+        if let activity = stateRestorationActivity {
+            AppState.shared.userActivity = activity
+            print(AppState.shared.userActivity.navigation)
+        }
+        
+        // assign tab bar controller
+        tabBarController = window?.rootViewController as? UITabBarController
+        
+        // assign saveRecipeDelegate
+        saveRecipeDelegate = (tabBarController as! SaveRecipeDelegate)
+        
+        // assign storyboard
+        storyboard = UIStoryboard(name: "Main", bundle: nil)
+         
+        // restore views
+        restoreViews(navigation: AppState.shared.navigation)
+        
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+    
+    //
+    // State Restoration Activity
+    //
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity?
+    {
+        return AppState.shared.userActivity
     }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    
+    
+    // MARK: - navigation
+    //
+    // Route Navigation
+    //
+    func restoreViews(navigation: AppNavigation)
+    {
+        // switch to correct tabbar view
+        tabBarController.selectedIndex = navigation.tabBarIndex
+        
+        // restore views based on navigation
+        switch navigation {
+            // restore saved recipes
+            case .savedRecipes(let nav):
+                restoreSavedRecipesView(nav)
+                
+            // restore search
+            case .search(let nav):
+                restoreSearchView(nav)
+                
+            // restore categories
+            case .categories(let nav):
+                restoreCategoriesView(nav)
+                
+            // restore ingredients
+            case .ingredients(let nav):
+                restoreIngredientsView(nav)
+        }
     }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+    
+    
+    //
+    // Restore saved recipes view, or recipe detail view
+    //
+    func restoreSavedRecipesView(_ navigation: AppNavigation.SavedRecipes)
+    {
+        let navigationController = (tabBarController.selectedViewController as! UINavigationController)
+        switch navigation {
+            case .all:
+                break
+            case .recipe(let identifier):
+                pushRecipeDetailView(navigationController: navigationController, identifier: identifier)
+        }
     }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+    
+    
+    //
+    // Restore search view, or recipe detail view
+    //
+    func restoreSearchView(_ navigation: AppNavigation.Search)
+    {
+        let navigationController = (tabBarController.selectedViewController as! UINavigationController)
+        let searchVC = (navigationController.children.first as! SearchRecipeListViewController)
+        
+        switch navigation {
+            case .none:
+                break
+            case .term(let term):
+                searchVC.searchTerm = term
+            case .recipe(let term, let recipeIdentifier):
+                searchVC.searchTerm = term
+                pushRecipeDetailView(navigationController: navigationController, identifier: recipeIdentifier)
+        }
     }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+    
+    
+    //
+    // Restore Categories view...
+    // ...or recipes for selected category
+    // ...or recipe detail view
+    //
+    func restoreCategoriesView(_ navigation: AppNavigation.Categories)
+    {
+        let navigationController = (tabBarController.selectedViewController as! UINavigationController)
+        
+        switch navigation {
+            // show all categories
+            case .all:
+                break
+            
+            // show recipes for this category
+            case .category(let category):
+                pushRecipesForCategoryView(navigationController: navigationController, selectedCategory: category)
+                
+            // show recipe detail
+            case .recipe(let category, let recipeIdentifier):
+                pushRecipesForCategoryView(
+                    navigationController: navigationController,
+                    selectedCategory: category,
+                    recipeIdentifier: recipeIdentifier)
+        }
     }
-
-
+    
+    
+    //
+    // Push Recipes For Category view onto nav controller,
+    // if recipeIdentifier, then push recipe detail view also
+    //
+    func pushRecipesForCategoryView(
+        navigationController: UINavigationController,
+        selectedCategory: RecipeCategory,
+        recipeIdentifier: RecipeIdentifier? = nil)
+    {
+        // instantiate VC from storyboard
+        let recipesForCategoryVC = storyboard.instantiateViewController(
+            identifier: AppNavigation.Identifiers.recipesForCategory)
+        {
+            coder in
+            return RecipesForCategoryViewController(
+                coder: coder,
+                category: selectedCategory,
+                saveDelegate: self.saveRecipeDelegate)
+        }
+        
+        // push to nav
+        navigationController.pushViewController(recipesForCategoryVC, animated: true)
+        
+        // if recipeIdentifier, push RecipeDetailView
+        if let recipeIdentifier = recipeIdentifier {
+            pushRecipeDetailView(navigationController: navigationController, identifier: recipeIdentifier)
+        }
+    }
+    
+    
+    //
+    // Restore Ingredients view...
+    // ...or recipes for selected ingredient
+    // ...or recipe detail view
+    //
+    func restoreIngredientsView(_ navigation: AppNavigation.Ingredients)
+    {
+        let navigationController = tabBarController.selectedViewController as! UINavigationController
+        
+        
+        switch navigation {
+            // show all ingredients
+            case .all:
+                break
+                
+            // show recipes for ingredient
+            case .ingredient(let ingredient):
+                pushRecipesForIngredientView(
+                    navigationController: navigationController,
+                    selectedIngredient: ingredient)
+                
+            // show specific recipe
+            case .recipe(let ingredient, let recipeIdentifier):
+                pushRecipesForIngredientView(
+                    navigationController: navigationController,
+                    selectedIngredient: ingredient,
+                    recipeIdentifier: recipeIdentifier)
+        }
+    }
+    
+    
+    //
+    // Push Recipes For Ingredient view onto nav controller,
+    // if recipeIdentifier, then push recipe detail view also
+    //
+    func pushRecipesForIngredientView(
+        navigationController: UINavigationController,
+        selectedIngredient: Ingredient,
+        recipeIdentifier: RecipeIdentifier? = nil)
+    {
+        // instantiate VC from storyboard
+        let recipesForIngredientVC = storyboard.instantiateViewController(
+            identifier: AppNavigation.Identifiers.recipesForIngredient)
+        {
+            coder in
+            return RecipesForIngredientViewController(
+                coder: coder,
+                ingredient: selectedIngredient,
+                saveDelegate: self.saveRecipeDelegate)
+        }
+        
+        // push to nav
+        navigationController.pushViewController(recipesForIngredientVC, animated: true)
+        
+        // if recipeIdentifier, push RecipeDetailView
+        if let recipeIdentifier = recipeIdentifier {
+            pushRecipeDetailView(navigationController: navigationController, identifier: recipeIdentifier)
+        }
+    }
+    
+    
+    //
+    // Push Recipe Detail View onto given view controller
+    //
+    func pushRecipeDetailView(navigationController: UINavigationController, identifier: RecipeIdentifier)
+    {
+        // Instantiate recipe detail view controller from storyboard
+        let recipeVC = storyboard.instantiateViewController(
+            identifier: AppNavigation.Identifiers.recipeDetail)
+        {
+            coder in
+            return RecipeDetailViewController(coder: coder)
+        }
+        
+        // assign recipe ID to view controller
+        recipeVC.recipeIdentifier = identifier
+        
+        // push recipe detail controller onto nav controller
+        navigationController.pushViewController(recipeVC, animated: true)
+        
+    }
 }
 
