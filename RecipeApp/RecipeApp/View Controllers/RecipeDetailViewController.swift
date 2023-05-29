@@ -33,6 +33,12 @@ class RecipeDetailViewController:
     
     
     // MARK: - lifecycle
+    //
+    // View did load:
+    //  - start loading animation
+    //  - assign ingredients table View Controller
+    //  - start fetching info from API
+    //
     override func viewDidLoad()
     {
         // start loading animation
