@@ -9,11 +9,26 @@ import UIKit
 
 class SearchRecipeListViewController: RecipeListTableViewController
 {
+    // search term
+    var searchTerm: String? {
+        get {
+            searchController.searchBar.text
+        }
+        
+        set {
+            searchController.searchBar.text = newValue
+        }
+    }
+    
+    // last searched term
+    var lastSearchedTerm = ""
     
     // search task
     var searchTask: Task<Void, Never>? = nil
     var searchController = UISearchController()
     
+    
+    // MARK: - lifecycle
     deinit {
         searchTask?.cancel()
     }
@@ -23,7 +38,41 @@ class SearchRecipeListViewController: RecipeListTableViewController
         super.viewDidLoad()
         configureSearch()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        // search if current search terms haven't been searched yet
+        if searchTerm != lastSearchedTerm {
+            fetchSearchedItems()
+        }
+    }
+    
+    
+    // MARK: - navigation
+    override func navigationForView() -> AppNavigation
+    {
+        // update nav
+        if lastSearchedTerm != "" {
+            return .search(.term(lastSearchedTerm))
+        } else {
+            return .search(.none)
+        }
+    }
+    
+    func updateNavigation(searchTerm: String)
+    {
+        AppState.shared.navigation = .search(.term(searchTerm))
+    }
+    
+    override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
+    {
+        let term = searchTerm!
+        let nav = AppNavigation.search(.recipe(lastSearchedTerm, identifier))
+        return nav
+    }
+    
     
     // MARK: - search
     //
@@ -72,7 +121,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
     @objc func fetchSearchedItems()
     {
         guard
-            let searchTerm = searchController.searchBar.text,
+            let searchTerm = searchTerm,
             searchTerm != ""
         else {
             // search field is empty or undefined. bail.
@@ -80,6 +129,9 @@ class SearchRecipeListViewController: RecipeListTableViewController
         }
         
         print("Searching for ", searchTerm)
+        
+        // update nav
+        updateNavigation(searchTerm: searchTerm)
         
         // create search request
         let request = RecipeSearchRequest(searchTerm: searchTerm)
@@ -101,6 +153,9 @@ class SearchRecipeListViewController: RecipeListTableViewController
             
             // update datasource
             updateDataSource()
+            
+            // set last searched term to this one
+            lastSearchedTerm = searchTerm
             
             // finish task
             searchTask = nil
