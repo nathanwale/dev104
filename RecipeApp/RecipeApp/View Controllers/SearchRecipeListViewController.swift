@@ -84,43 +84,39 @@ class SearchRecipeListViewController: RecipeListTableViewController
         // activate from start
         searchController.isActive = true
         
-        // This VC is the search results updater
-        searchController.searchResultsUpdater = self
+        // set searchbar delegate to handle search button being pressed
+        searchController.searchBar.delegate = self
         
         // automatically show results
-        searchController.automaticallyShowsSearchResultsController = true
+        searchController.automaticallyShowsSearchResultsController = false
         
         // don't hide nav bar when searching
         searchController.hidesNavigationBarDuringPresentation = false
         
         // don't hid background when searching
         searchController.obscuresBackgroundDuringPresentation = false
-        
-        // add tab gesture recogniser to end search
-        // when pressing outside search bar
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endSearch))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
     }
     
     
     //
     // end searching
     //
-    @objc func endSearch()
+    func endSearch()
     {
         searchController.isActive = false
+        searchTerm = lastSearchedTerm
     }
     
     
     //
     // search recipes for `searchTerm`
     //
-    @objc func fetchSearchedItems()
+    func fetchSearchedItems()
     {
         guard
             let searchTerm = searchTerm,
-            searchTerm != ""
+            searchTerm != "",
+            searchTerm != lastSearchedTerm
         else {
             // search field is empty or undefined. bail.
             return
@@ -155,21 +151,26 @@ class SearchRecipeListViewController: RecipeListTableViewController
             // set last searched term to this one
             lastSearchedTerm = searchTerm
             
+            // end search
+            endSearch()
+            
             // finish task
             searchTask = nil
         }
     }
 }
 
-
-
+// MARK: - UISearchBarDelegate
 //
-// Conformance to UISearchResultsUpdating
+// UISearchBarDelegate conformance
 //
-extension SearchRecipeListViewController: UISearchResultsUpdating
+extension SearchRecipeListViewController: UISearchBarDelegate
 {
-    func updateSearchResults(for searchController: UISearchController) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(fetchSearchedItems), object: nil)
-        perform(#selector(fetchSearchedItems), with: nil, afterDelay: 0.3)
+    //
+    // Perform search when search button pressed
+    //
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        fetchSearchedItems()
     }
 }
