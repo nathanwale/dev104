@@ -25,10 +25,18 @@ class IngredientListViewController:
     // fetch task
     var fetchTask: Task<Void, Never>? = nil
     
+    // are we loading?
+    var isLoading = true
+    
     
     // MARK: - lifecycle
     override func viewDidLoad()
     {
+        // show loading message
+        isLoading = true
+        tableView.reloadData()
+        
+        // fetch ingredients
         fetch()
     }
     
@@ -68,6 +76,9 @@ class IngredientListViewController:
                 print(error)
             }
             
+            // hide loading message
+            isLoading = false
+            
             // finish task
             fetchTask = nil
         }
@@ -88,6 +99,23 @@ class IngredientListViewController:
     // Configure cell with ingredient text
     //
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        // grab ingredient cell or loading message cell
+        // depending on section
+        if indexPath.section == 0 {
+            // ingredient cell
+            return ingredientCell(indexPath: indexPath)
+        } else {
+            // loading message cell
+            return loadingIndicatorCell()
+        }
+    }
+    
+    
+    //
+    // Configure and return ingredient cell
+    //
+    func ingredientCell(indexPath: IndexPath) -> UITableViewCell
     {
         // get cell
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
@@ -111,8 +139,36 @@ class IngredientListViewController:
     //
     // Number of rows in section
     //
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ingredients.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        // section 0 is the ingredients,
+        // section 1 is actually the loading animation
+        if section == 0 {
+            // ingredients
+            return ingredients.count
+        } else {
+            // loading animation
+            if isLoading {
+                // show if loading
+                return 1
+            } else {
+                // hide if not loading
+                return 0
+            }
+        }
+    }
+    
+    //
+    // Number of sections:
+    //      the second section is used for a loading message
+    //
+    override func numberOfSections(in tableView: UITableView) -> Int
+    {
+        if isLoading {
+            return 2
+        } else {
+            return 1
+        }
     }
     
     
@@ -140,6 +196,46 @@ class IngredientListViewController:
     }
     
     
+    // MARK: - loading indicator
+    //
+    // Return and animate loading indicator cell
+    //
+    func loadingIndicatorCell() -> UITableViewCell
+    {
+        // get cell
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Empty")
+        else {
+            fatalError("No cells with reuse id 'Empty'")
+        }
+        
+        // loading animation
+        animateLoadingCell(cell: cell)
+        
+        return cell
+    }
+    
+    
+    //
+    // Animate loading indicator cell
+    //  - spins the embedded image in the cell
+    //
+    func animateLoadingCell(cell: UITableViewCell)
+    {
+        // grab image inside cell
+        let image = cell.contentView.subviews.first!
+        
+        // start spinning!
+        UIView.animate(
+            withDuration: 5.0,
+            delay: 0,
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 0.1,
+            options: [.repeat, .autoreverse])
+        {
+            image.transform = image.transform.rotated(by: .pi * 1)
+        }
+    }
 }
 
 
