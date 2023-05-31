@@ -34,6 +34,13 @@ class RecipesForCategoryViewController: RecipeListTableViewController
         fatalError("Not supported")
     }
     
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        // update nav controller title
+        navigationItem.title = "\(category) recipes"
+    }
     
     override func loadItems()
     {
