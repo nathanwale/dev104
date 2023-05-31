@@ -524,7 +524,7 @@
                             <outlet property="delegate" destination="5cK-Dh-RAW" id="Ci3-vh-keD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Categories" id="viR-BO-zux"/>
+                    <navigationItem key="navigationItem" title="Ingredients" id="viR-BO-zux"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nWt-aI-dRA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -581,7 +581,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NJ4-Qw-pN4"/>
+        <segue reference="6LU-94-jLO"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="carrot" catalog="system" width="128" height="122"/>
