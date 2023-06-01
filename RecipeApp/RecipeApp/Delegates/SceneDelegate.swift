@@ -20,9 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     //
     // Scene will connect
     //
-    func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity?)
+    func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity)
     {
-        if let activity = stateRestorationActivity {
+        // Type for stateRestorationActivity described in API is WRONG
+        // ...it can be nil, and will crash the app if accessed as non-optional
+        // ...so we convert it to optional
+        let activity = stateRestorationActivity as NSUserActivity?
+        
+        if let activity = activity {
             AppState.shared.userActivity = activity
             print(AppState.shared.userActivity.navigation)
         }
