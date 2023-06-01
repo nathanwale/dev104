@@ -287,7 +287,7 @@ extension RecipeListTableViewController
         func isSaved(itemId: ViewModel.ItemId) -> Bool
         {
             let item = itemStore[itemId]!
-            return UserRecipeStore.shared.savedRecipes.contains(item)
+            return UserRecipeStore.shared.isSaved(recipe: item)
         }
     }
 }
@@ -306,6 +306,7 @@ extension RecipeListTableViewController
             let vc = segue.destination as? RecipeDetailViewController
         {
             vc.configure(recipeIdentifier: itemId)
+            vc.saveRecipeDelegate = self.saveRecipeDelegate
         }
     }
     
