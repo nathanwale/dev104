@@ -24,12 +24,19 @@ class RecipeDetailViewController:
     @IBOutlet var recipeInstructionsLabel: UILabel!
     @IBOutlet var ingredientsTableHeight: NSLayoutConstraint!
     @IBOutlet var loadingOverlay: UIView!
+    @IBOutlet var saveButton: UIButton!
     
     
     // MARK: - properties
+    // recipe detail
+    var recipeDetail: RecipeDetail!
     // recipe ID
     var recipeIdentifier: RecipeIdentifier!
+    // save recipe delegate
     var saveRecipeDelegate: SaveRecipeDelegate!
+    
+    // has this recipe been saved?
+    var isSaved = false
     
     // tasks for fetching detail and image
     var fetchDetailTask: Task<Void, Never>? = nil
@@ -74,6 +81,15 @@ class RecipeDetailViewController:
     //
     func updateDetail(recipeDetail: RecipeDetail)
     {
+        // assign recipe
+        self.recipeDetail = recipeDetail
+        
+        // update is saved
+        isSaved = UserRecipeStore.shared.isSaved(recipe: recipeDetail.listItem)
+        
+        // update save button
+        updateSaveButton()
+        
         // recipe name
         nameLabel.text = recipeDetail.name
         
@@ -156,6 +172,50 @@ class RecipeDetailViewController:
             }
             // finish task
             fetchImageTask = nil
+        }
+    }
+    
+    
+    // MARK: - saving
+    //
+    // Save button pressed, update save state
+    //
+    @IBAction func savePressed()
+    {
+        isSaved.toggle()
+        updateSaveState()
+        updateSaveButton()
+    }
+    
+    
+    //
+    // update save button title
+    //
+    func updateSaveButton()
+    {
+        // is it saved?
+        if isSaved {
+            // if saved, button should now say "Unsave"
+            saveButton.setTitle("Unsave", for: .normal)
+        } else {
+            // if not saved, button should now say "Save"
+            saveButton.setTitle("Save", for: .normal)
+        }
+    }
+    
+    
+    //
+    // update recipe save state
+    //
+    func updateSaveState()
+    {
+        // is it saved?
+        if isSaved {
+            // if saved, unsave
+            saveRecipeDelegate.save(recipe: recipeDetail.listItem)
+        } else {
+            // if not saved, save
+            saveRecipeDelegate.unsave(recipe: recipeDetail.listItem)
         }
     }
 }
