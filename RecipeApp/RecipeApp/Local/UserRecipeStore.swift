@@ -63,6 +63,15 @@ struct UserRecipeStore
             print(error)
         }
     }
+    
+    
+    //
+    // Has this recipe been saved?
+    //
+    func isSaved(recipe: RecipeListItem) -> Bool
+    {
+        return UserRecipeStore.shared.savedRecipes.contains(recipe)
+    }
 }
 
 
