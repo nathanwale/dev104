@@ -150,7 +150,7 @@
                                                     <constraint firstAttribute="height" constant="200" id="HEQ-Bx-wr1"/>
                                                 </constraints>
                                             </imageView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k4U-bO-KvS">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="k4U-bO-KvS">
                                                 <rect key="frame" x="0.0" y="220" width="393" height="128"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEf-tc-3zH" userLabel="Spacer">
@@ -160,12 +160,27 @@
                                                             <constraint firstAttribute="width" constant="20" id="6z7-dp-bNf"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Recipe Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ex9-HK-wkk" userLabel="Recipe Name">
-                                                        <rect key="frame" x="20" y="0.0" width="373" height="128"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="245" verticalHuggingPriority="252" horizontalCompressionResistancePriority="754" text="Recipe Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ex9-HK-wkk" userLabel="Recipe Name">
+                                                        <rect key="frame" x="20" y="87.333333333333314" width="300" height="40.666666666666657"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="249" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dge-1s-UEG">
+                                                        <rect key="frame" x="320" y="101.66666666666669" width="53" height="26.333333333333343"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Save"/>
+                                                        <connections>
+                                                            <action selector="savePressed" destination="8X7-bu-gpo" eventType="touchUpInside" id="sjK-AR-0SG"/>
+                                                        </connections>
+                                                    </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkw-hh-ofz" userLabel="Spacer">
+                                                        <rect key="frame" x="373" y="0.0" width="20" height="128"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="20" id="jLC-rI-HTx"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                             <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="247" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="754" translatesAutoresizingMaskIntoConstraints="NO" id="HqN-Ef-SXj">
@@ -273,6 +288,7 @@
                         <outlet property="nameLabel" destination="ex9-HK-wkk" id="faL-b9-DN5"/>
                         <outlet property="recipeImageView" destination="oR6-na-pN5" id="M23-Hr-NAX"/>
                         <outlet property="recipeInstructionsLabel" destination="YQr-HN-l3a" id="2cn-5K-Wlg"/>
+                        <outlet property="saveButton" destination="Dge-1s-UEG" id="N63-yI-82l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="czp-RL-WWF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
