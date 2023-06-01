@@ -33,6 +33,16 @@ struct RecipeDetail
     let videoUrl: URL?
     let tags: [String]
     let ingredients: [IngredientMeasurement]
+    
+    // as RecipeListItem
+    var listItem: RecipeListItem {
+        get {
+            RecipeListItem(
+                name: name,
+                imageUrl: imageUrl ?? URL(string: "")!,
+                identifier: identifier)
+        }
+    }
 }
 
 
