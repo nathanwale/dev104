@@ -7,5 +7,5 @@
 
 import Foundation
 
-
+// RecipeCategory mapped to String
 typealias RecipeCategory = String

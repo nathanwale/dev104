@@ -7,6 +7,14 @@
 
 import UIKit
 
+
+//
+// Cell for a recipe
+// ...shows name and image
+// ...has a save/unsave button
+// ...requires save recipe delegate
+// ...indicates when a recipe is newly added
+//
 class RecipeListCell: UITableViewCell
 {
     // MARK: - outlets

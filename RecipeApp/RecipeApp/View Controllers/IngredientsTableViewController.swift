@@ -7,6 +7,11 @@
 
 import UIKit
 
+//
+// Embedded Ingredients table
+// ...lists ingredients
+// ...for use inside RecipeDetailViewController
+//
 class IngredientsTableViewController: UITableViewController
 {
     // MARK: - properties
@@ -23,6 +28,11 @@ class IngredientsTableViewController: UITableViewController
         view.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    
+    //
+    // Load view
+    // ...I forget why this is here
+    //
     override func loadView() {
         super.loadView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +51,7 @@ class IngredientsTableViewController: UITableViewController
     
     // MARK: - datasource
     //
-    // Number of rows
+    // Number of rows is number of ingredients
     //
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-// lookup.php?i=52772
+// eg.: lookup.php?i=52772
 
 //
 // Request a RecipeDetail object by id
@@ -16,14 +16,18 @@ import Foundation
 //
 struct RecipeDetailRequest: ApiRequest
 {
+    // response is ["meals": [optional List of recipes]]
     typealias Response = [String: [RecipeDetail]?]
     
+    // recipe id
     var recipeIdentifier: RecipeIdentifier
     
+    // URL path end
     var subPath: String {
         "lookup.php"
     }
     
+    // query string
     var queryItems: [URLQueryItem]? {
         [URLQueryItem(name: "i", value: recipeIdentifier)]
     }

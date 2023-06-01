@@ -7,6 +7,11 @@
 
 import UIKit
 
+//
+// Generic list of recipes.
+// ...intended to be subclassed
+// ...requires a SaveRecipeDelegate
+//
 class RecipeListTableViewController:
     UITableViewController,
     RequiresSaveRecipeDelegate
@@ -312,6 +317,8 @@ extension RecipeListTableViewController
         guard let itemId = dataSource?.itemIdentifier(for: indexPath) else {
             return
         }
+        
+        
         
         AppState.shared.navigation = navigationForSelectedRecipe(identifier: itemId)
         performSegue(withIdentifier: "ShowRecipeDetail", sender: itemId)

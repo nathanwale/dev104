@@ -7,10 +7,14 @@
 
 import Foundation
 
+//
+// Return list of categories from server
+//
 struct RecipeCategoryListRequest: ApiRequest
 {
     typealias Response = [String: [CategoryDecoder]]
     
+    // Encoding of JSON response
     struct CategoryDecoder: Codable
     {
         let category: RecipeCategory
@@ -29,8 +33,13 @@ struct RecipeCategoryListRequest: ApiRequest
         [URLQueryItem(name: "c", value: "list")]
     }
     
+    
+    //
+    // Returns list of RecipeCategories from request
+    //
     func fetchCategories() async throws -> [RecipeCategory]
     {
+        // Extract RecipeCategories from CategoryDecoders
         try await send()["meals"]!.map { $0.category }
     }
 }

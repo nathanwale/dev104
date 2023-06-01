@@ -8,12 +8,16 @@
 import Foundation
 
 
-// search.php?s=Chicken
+// eg. search.php?s=Chicken
 
+//
+// Return RecipeListItems for a search request
+//
 struct RecipeSearchRequest: ApiRequest
 {
     typealias Response = [String: [RecipeListItem]?]
     
+    // term to search for
     var searchTerm: String
     
     var subPath: String {

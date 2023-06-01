@@ -7,6 +7,11 @@
 
 import UIKit
 
+//
+// Searched Recipes
+// ...always shows search bar
+// ...searches only when user submits search terms
+//
 class SearchRecipeListViewController: RecipeListTableViewController
 {
     // search term
@@ -29,16 +34,25 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     
     // MARK: - lifecycle
+    // Cancel search task if active
     deinit {
         searchTask?.cancel()
     }
     
+    //
+    // View Did Load
+    // ...Configure search controller
+    //
     override func viewDidLoad()
     {
         super.viewDidLoad()
         configureSearch()
     }
     
+    //
+    // View will appear
+    // ... fetches searched recipes if search terms have changed
+    //
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -51,21 +65,26 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     
     // MARK: - navigation
+    // Return AppNavigation when viewed
     override func navigationForView() -> AppNavigation
     {
         // update nav
         if lastSearchedTerm != "" {
+            // User was searching for a particular thing
             return .search(.term(lastSearchedTerm))
         } else {
+            // User wasn't searching for anything
             return .search(.none)
         }
     }
     
+    // Update navigation on AppState with search term
     func updateNavigation(searchTerm: String)
     {
         AppState.shared.navigation = .search(.term(searchTerm))
     }
     
+    // AppNavigation when user selects a recipe
     override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
     {
         AppNavigation.search(.recipe(lastSearchedTerm, identifier))
@@ -74,7 +93,7 @@ class SearchRecipeListViewController: RecipeListTableViewController
     
     // MARK: - search
     //
-    // configure search
+    // configure search controller
     //
     func configureSearch()
     {

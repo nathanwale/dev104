@@ -7,6 +7,12 @@
 
 import UIKit
 
+//
+// List of saved recipes
+// ...subclass of RecipeListTableViewController
+// ...marks newly added recipes for highlighting in UI
+// ...is notified when recipes are saved or unsaved
+//
 class FavouriteRecipesViewController: RecipeListTableViewController
 {
     // items that have recently been added

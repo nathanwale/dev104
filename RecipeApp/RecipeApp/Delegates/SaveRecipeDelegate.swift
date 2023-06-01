@@ -17,7 +17,7 @@ protocol SaveRecipeDelegate
     func save(recipe: RecipeListItem)
     func unsave(recipe: RecipeListItem)
     
-    // recipe list controllers
+    // recipe list controllers that need to be notified of save changes
     var recipeListControllers: [RecipeListTableViewController] { get set }
     func registerRecipeListController(_ controller: RecipeListTableViewController)
 }

@@ -7,6 +7,12 @@
 
 import Foundation
 
+//
+// State of the App for restoration purposes
+//  - shared: Shared instance
+//  - navigation: current navigation as an AppNavigation
+//  - userActivity: current NSUserActivity
+//
 struct AppState
 {
     // shared instance

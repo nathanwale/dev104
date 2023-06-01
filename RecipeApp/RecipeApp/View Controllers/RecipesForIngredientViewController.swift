@@ -7,6 +7,12 @@
 
 import UIKit
 
+//
+// List of recipes belonging to an ingredient
+// ...is a subclass of RecipeListTableViewController
+// ...Section 0 is for recipes
+// ...Section 1 is for a message indicating no results
+//
 class RecipesForIngredientViewController: RecipeListTableViewController
 {
     // MARK: - properties
@@ -37,6 +43,11 @@ class RecipesForIngredientViewController: RecipeListTableViewController
         fatalError("Not supported")
     }
     
+    
+    //
+    // View did load
+    // ...update nav title
+    //
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -45,6 +56,10 @@ class RecipesForIngredientViewController: RecipeListTableViewController
         navigationItem.title = "\(ingredient) recipes"
     }
     
+    
+    //
+    // Fetch items
+    //
     override func loadItems()
     {
         fetch()
@@ -52,12 +67,13 @@ class RecipesForIngredientViewController: RecipeListTableViewController
     
     
     // MARK: - navigation
+    // Showing particular ingredient
     override func navigationForView() -> AppNavigation
     {
         .ingredients(.ingredient(ingredient))
     }
     
-    
+    // showing particular recipe under an ingredient
     override func navigationForSelectedRecipe(identifier: RecipeIdentifier) -> AppNavigation
     {
         .ingredients(.recipe(ingredient, identifier))

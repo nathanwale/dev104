@@ -7,7 +7,12 @@
 
 import UIKit
 
-
+//
+// List of Ingredients fetched from Remote API
+// ...Section 0 is the actual Ingredient list
+// ...Section 1 is used to show a loading indicator
+// ...Requires SaveRecipeDelegate
+//
 class IngredientListViewController:
     UITableViewController,
     RequiresSaveRecipeDelegate

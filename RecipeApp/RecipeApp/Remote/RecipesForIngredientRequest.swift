@@ -1,5 +1,5 @@
 //
-//  CategoryListRequest.swift
+//  RecipesForIngredientRequest.swift
 //  RecipeApp
 //
 //  Created by Nathan Wale on 11/4/2023.
@@ -7,10 +7,14 @@
 
 import Foundation
 
+//
+// Fetch RecipeListItems for a given Ingredient
+//
 struct RecipesForIngredientRequest: ApiRequest
 {
     typealias Response = [String: [RecipeListItem]?]
     
+    // given ingredient
     var ingredient: Ingredient
         
     var subPath: String {
@@ -21,6 +25,10 @@ struct RecipesForIngredientRequest: ApiRequest
         [URLQueryItem(name: "i", value: ingredient)]
     }
     
+    
+    //
+    // Fetch RecipeListItems for stored self.ingredient
+    //
     func fetchRecipes() async throws -> [RecipeListItem]
     {
         // send() returns a dictionary with one key ["meals"]

@@ -7,7 +7,12 @@
 
 import UIKit
 
-
+//
+// Shows list of Recipe Categories
+// ...Multi-section table
+// ...Categories are hard-coded: the list from the API isn't grouped, and includes junk
+// ...Requires SaveRecipeDelegate
+//
 class RecipeCategoryListViewController:
     UITableViewController,
     RequiresSaveRecipeDelegate
@@ -75,6 +80,9 @@ class RecipeCategoryListViewController:
     
     
     // MARK: - datasource
+    //
+    // RecipeCategory for selected table row
+    //
     func selectedCategory() -> RecipeCategory?
     {
         guard
@@ -109,16 +117,19 @@ class RecipeCategoryListViewController:
 
 extension RecipeCategoryListViewController
 {
+    // Sections
     enum Section: String {
         case diet = "Diet"
         case meal = "Meal"
         case ingredient = "Ingredient"
     }
     
+    // Order of sections (Dictionaries aren't ordered)
     var sectionOrder: [Section] {
         [.diet, .meal, .ingredient]
     }
     
+    // Mapping of Category to Section
     var categories: [Section: [RecipeCategory]] {
         [
             .diet: [

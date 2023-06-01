@@ -58,8 +58,13 @@ extension UserDefaultsStore
     //
     func save(store: StoreType)
     {
+        // encode store as JSON
         let data = try! JSONEncoder().encode(store)
+        
+        // convert data to UTF8 String
         let asString = String(data: data, encoding: .utf8)
+        
+        // store on UserDefaults
         UserDefaults.standard.set(asString, forKey: storageKey)
     }
     

@@ -7,10 +7,14 @@
 
 import Foundation
 
+//
+// Fetch RecipeListItems for a given Category
+//
 struct RecipesForCategoryRequest: ApiRequest
 {
     typealias Response = [String: [RecipeListItem]?]
-    
+        
+    // the given category
     var category: RecipeCategory
         
     var subPath: String {
@@ -21,6 +25,10 @@ struct RecipesForCategoryRequest: ApiRequest
         [URLQueryItem(name: "c", value: category)]
     }
     
+    
+    //
+    // fetch RecipeListItems for given category
+    //
     func fetchRecipes() async throws -> [RecipeListItem]
     {
         // send() returns a dictionary with one key ["meals"]

@@ -27,6 +27,7 @@ enum AppNavigation: Codable
         case recipe(RecipeIdentifier)
     }
     
+    // Showing search tab
     enum Search: Codable
     {
         // No search terms entered
@@ -37,6 +38,7 @@ enum AppNavigation: Codable
         case recipe(String, RecipeIdentifier)
     }
     
+    // Showing categories
     enum Categories: Codable
     {
         // Showing all categories
@@ -47,6 +49,7 @@ enum AppNavigation: Codable
         case recipe(RecipeCategory, RecipeIdentifier)
     }
     
+    // Showing ingredients list
     enum Ingredients: Codable
     {
         // Showing all ingredients
@@ -57,6 +60,10 @@ enum AppNavigation: Codable
         case recipe(Ingredient, RecipeIdentifier)
     }
     
+    
+    //
+    // Default state: show all saved recipes
+    //
     static func defaultState() -> Self
     {
         .savedRecipes(.all)
@@ -82,6 +89,8 @@ enum AppNavigation: Codable
 
 //
 // Tabbar index
+//   - for selecting correct tab bar for an AppNavigation
+//   - mapped to root navigation in Main storyboard
 //
 extension AppNavigation
 {

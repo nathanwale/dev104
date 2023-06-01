@@ -36,9 +36,12 @@ extension NSUserActivity
         
         // encode into userInfo
         set {
+            // can newValue be encoded as JSON?
             if let jsonData = try? JSONEncoder().encode(newValue) {
+                // ...yes: store new value
                 userInfo?[navigationKey] = jsonData
             } else {
+                // ...no: store default navigation
                 userInfo?[navigationKey] = AppNavigation.defaultState()
             }
         }

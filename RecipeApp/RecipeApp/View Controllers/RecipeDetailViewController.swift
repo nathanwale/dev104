@@ -7,6 +7,12 @@
 
 import UIKit
 
+//
+// Show recipe details
+// ...requires SaveRecipeDelegate
+// ...has an animated overlay when loading
+// ...fetches recipe detail and image from remote server
+//
 class RecipeDetailViewController:
     UIViewController,
     RequiresSaveRecipeDelegate,

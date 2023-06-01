@@ -7,6 +7,11 @@
 
 import UIKit
 
+//
+// Root Navigation.
+// ...is a tab bar controller
+// ...all View Controllers are a child of this one
+//
 class RootNavigationViewController: UITabBarController
 {
     // attached view controllers
