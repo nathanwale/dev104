@@ -46,6 +46,10 @@ class IngredientListViewController:
     }
     
     
+    //
+    // View will appear
+    // ..update navigation
+    //
     override func viewWillAppear(_ animated: Bool)
     {
         // update nav
