@@ -21,6 +21,11 @@ class RootNavigationViewController: UITabBarController
     var recipeListControllers = [RecipeListTableViewController]()
    
     // MARK: - initialisation
+    //
+    // View did load:
+    // ..assign save delegate to child VCs
+    // ..assign saved recipes controller
+    //
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -30,6 +35,16 @@ class RootNavigationViewController: UITabBarController
 
         // assign saved recipes controller
         assignSavedRecipesController()
+    }
+    
+    
+    //
+    // View did appear:
+    // ..update navigation colour
+    //
+    override func viewDidAppear(_ animated: Bool)
+    {
+        updateNavigationColour(for: selectedIndex)
     }
     
     
@@ -63,6 +78,37 @@ class RootNavigationViewController: UITabBarController
         
         // assign it
         savedRecipesViewController = vc
+    }
+    
+    
+    //
+    // Did select tab item
+    // ..update navigation colour
+    //
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem)
+    {
+        if let index = tabBar.items?.firstIndex(of: item) {
+            updateNavigationColour(for: index)
+        }
+        
+    }
+    
+    
+    //
+    // Set navigation colour based on index
+    //
+    func updateNavigationColour(for index: Int)
+    {
+        let colours: [UIColor] = [
+            .systemBlue,
+            .systemPink,
+            .systemPurple,
+            .systemGreen,
+        ]
+        
+        if let window = view.window {
+            window.tintColor = colours[index]
+        }
     }
 }
 
