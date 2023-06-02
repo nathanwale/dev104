@@ -57,7 +57,6 @@ class RecipeListTableViewController:
         AppState.shared.navigation = navigationForView()
     }
 
-    
     // override to load items in subclass
     func loadItems() {}
     
@@ -128,7 +127,8 @@ class RecipeListTableViewController:
     func updateDataSource()
     {
         let dummyIdentifiers = ["--empty"]
-        if model.snapshot.numberOfItems(inSection: .main) == 0 {
+        if model.snapshot.indexOfSection(.main) == nil
+            || model.snapshot.numberOfItems(inSection: .main) == 0 {
             // not items, so append to empty section
             if !model.snapshot.sectionIdentifiers.contains(.empty) {
                 model.snapshot.appendSections([.empty])
