@@ -94,6 +94,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         UINavigationBar.appearance().compactScrollEdgeAppearance = navBarAppearance
     }
     
+    
     // MARK: - restoration
     //
     // Route Navigation
@@ -293,6 +294,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         // assign recipe ID to view controller
         recipeVC.recipeIdentifier = identifier
+        
+        // assign save delegate
+        recipeVC.saveRecipeDelegate = saveRecipeDelegate
         
         // push recipe detail controller onto nav controller
         navigationController.pushViewController(recipeVC, animated: true)
