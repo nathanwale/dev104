@@ -68,7 +68,7 @@ enum AppNavigation: Codable
     {
         .savedRecipes(.all)
     }
-    
+        
     
     // MARK: - identifiers
     //
