@@ -20,9 +20,11 @@ class RecipeCategoryListViewController:
     let reuseIdentifier = "RecipeCategory"
     var saveRecipeDelegate: SaveRecipeDelegate!
     
+    
     // MARK: - lifecycle
     override func viewWillAppear(_ animated: Bool)
     {
+        super.viewWillAppear(animated)
         // update nav
         AppState.shared.navigation = .categories(.all)
     }
