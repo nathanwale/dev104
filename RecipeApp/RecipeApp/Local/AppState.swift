@@ -25,7 +25,6 @@ struct AppState
         }
         set {
             userActivity.navigation = newValue
-            print(newValue)
         }
     }
     
