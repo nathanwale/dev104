@@ -17,7 +17,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
 {
     // items that have recently been added
     var newlyAddedRecipes = [RecipeListItem]()
-            
+    
     
     // MARK: - lifecycle
     
@@ -72,7 +72,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
     
     
     //
-    // unmark new items, empty newly added recipes
+    // unmark new items, empty newly added recipes, remove badge from tab bar
     //
     func unmarkNewRecipes()
     {
@@ -82,6 +82,10 @@ class FavouriteRecipesViewController: RecipeListTableViewController
 
         updateItems(newlyAddedRecipes)
         newlyAddedRecipes = []
+        
+        if let tabBarItem = tabBarController?.tabBar.items?.first {
+            tabBarItem.badgeValue = nil
+        }
     }
     
     

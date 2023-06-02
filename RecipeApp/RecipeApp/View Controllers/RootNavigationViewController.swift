@@ -142,6 +142,9 @@ extension RootNavigationViewController: SaveRecipeDelegate
         for listController in recipeListControllers {
             listController.updateSaveState(recipe: recipe, saved: true)
         }
+        
+        // update count on saved tab badge
+        updateSavedBadge()
     }
     
     
@@ -161,6 +164,28 @@ extension RootNavigationViewController: SaveRecipeDelegate
         // tell all registered recipe list VCs
         for listController in recipeListControllers {
             listController.updateSaveState(recipe: recipe, saved: false)
+        }
+        
+        // update count on saved tab badge
+        updateSavedBadge()
+    }
+    
+    
+    //
+    // update count on saved tab badge
+    //
+    func updateSavedBadge()
+    {
+        guard let savedTabBarItem = tabBar.items?.first else {
+            return
+        }
+        
+        let count = savedRecipesViewController.newlyAddedRecipes.count
+        
+        if count > 0 {
+            savedTabBarItem.badgeValue = String(count)
+        } else {
+            savedTabBarItem.badgeValue = nil
         }
     }
     
