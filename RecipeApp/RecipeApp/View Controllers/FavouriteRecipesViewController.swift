@@ -17,9 +17,10 @@ class FavouriteRecipesViewController: RecipeListTableViewController
 {
     // items that have recently been added
     var newlyAddedRecipes = [RecipeListItem]()
-    
+            
     
     // MARK: - lifecycle
+    
     //
     // view will appear:
     //   - mark newly added recipes
@@ -31,6 +32,7 @@ class FavouriteRecipesViewController: RecipeListTableViewController
         // mark new recipes
         markNewRecipes()
     }
+
     
     //
     // view did disappear:
