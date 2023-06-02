@@ -19,7 +19,6 @@ class RecipeDetailViewController:
     AnimatedLoadingOverlay
 {
     // MARK: - outlets
-    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var recipeImageView: UIImageView!
     @IBOutlet var recipeInstructionsLabel: UILabel!
     @IBOutlet var ingredientsTableHeight: NSLayoutConstraint!
@@ -91,7 +90,7 @@ class RecipeDetailViewController:
         updateSaveButton()
         
         // recipe name
-        nameLabel.text = recipeDetail.name
+        navigationItem.title = recipeDetail.name
         
         // instructions
         recipeInstructionsLabel.text = recipeDetail.instructions
