@@ -112,8 +112,12 @@ class SearchRecipeListViewController: RecipeListTableViewController
         // don't hide nav bar when searching
         searchController.hidesNavigationBarDuringPresentation = false
         
-        // don't hid background when searching
+        // don't hide background when searching
         searchController.obscuresBackgroundDuringPresentation = false
+        
+        // make search bar more visible against colour
+        searchController.searchBar.searchTextField.backgroundColor = .systemBackground
+        searchController.searchBar.backgroundColor = .tintColor
     }
     
     
