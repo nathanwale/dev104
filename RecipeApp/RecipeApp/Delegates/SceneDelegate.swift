@@ -40,7 +40,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
         
         // assign storyboard
         storyboard = UIStoryboard(name: "Main", bundle: nil)
-         
+              
+        // style nav bars
+        styleNavigationBar()
+        
         // restore views
         restoreViews(navigation: AppState.shared.navigation)
         
@@ -55,7 +58,43 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate
     }
     
     
-    // MARK: - navigation
+    // MARK: - style
+    //
+    // Set style of navigation bar
+    //
+    func styleNavigationBar()
+    {
+        let navBarAppearance = UINavigationBarAppearance()
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+        // nav bar should NOT be translucent
+        navBarAppearance.configureWithOpaqueBackground()
+
+        // set bar tint
+        navBarAppearance.backgroundColor = .tintColor
+
+        // set font colour to white
+        navBarAppearance.titleTextAttributes = textAttributes
+        navBarAppearance.largeTitleTextAttributes = textAttributes
+        
+        // style buttons
+        let buttonAppearance = UIBarButtonItemAppearance()
+        buttonAppearance.normal.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        
+        UIBarButtonItem.appearance().tintColor = .white
+        
+        navBarAppearance.buttonAppearance = buttonAppearance
+
+        // attach appearance
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
+        UINavigationBar.appearance().compactScrollEdgeAppearance = navBarAppearance
+    }
+    
+    // MARK: - restoration
     //
     // Route Navigation
     //
